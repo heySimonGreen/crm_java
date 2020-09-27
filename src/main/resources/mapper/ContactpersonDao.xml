@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.dao.ContactpersonDao">
+
+    <resultMap type="com.example.demo.entity.Contactperson" id="ContactpersonMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="gender" column="gender" jdbcType="VARCHAR"/>
+        <result property="phonenumber" column="phonenumber" jdbcType="INTEGER"/>
+        <result property="homephonenumber" column="homephonenumber" jdbcType="INTEGER"/>
+        <result property="wechat" column="wechat" jdbcType="VARCHAR"/>
+        <result property="email" column="email" jdbcType="VARCHAR"/>
+        <result property="identity" column="identity" jdbcType="VARCHAR"/>
+        <result property="cid" column="cid" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="ContactpersonMap">
+        select
+          id, name, gender, phonenumber, homephonenumber, wechat, email, identity, cid
+        from crm.contactperson
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="ContactpersonMap">
+        select
+          id, name, gender, phonenumber, homephonenumber, wechat, email, identity, cid
+        from crm.contactperson
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="ContactpersonMap">
+        select
+        id, name, gender, phonenumber, homephonenumber, wechat, email, identity, cid
+        from crm.contactperson
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="name != null and name != ''">
+                and name = #{name}
+            </if>
+            <if test="gender != null and gender != ''">
+                and gender = #{gender}
+            </if>
+            <if test="phonenumber != null">
+                and phonenumber = #{phonenumber}
+            </if>
+            <if test="homephonenumber != null">
+                and homephonenumber = #{homephonenumber}
+            </if>
+            <if test="wechat != null and wechat != ''">
+                and wechat = #{wechat}
+            </if>
+            <if test="email != null and email != ''">
+                and email = #{email}
+            </if>
+            <if test="identity != null and identity != ''">
+                and identity = #{identity}
+            </if>
+            <if test="cid != null">
+                and cid = #{cid}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into crm.contactperson(name, gender, phonenumber, homephonenumber, wechat, email, identity, cid)
+        values (#{name}, #{gender}, #{phonenumber}, #{homephonenumber}, #{wechat}, #{email}, #{identity}, #{cid})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update crm.contactperson
+        <set>
+            <if test="name != null and name != ''">
+                name = #{name},
+            </if>
+            <if test="gender != null and gender != ''">
+                gender = #{gender},
+            </if>
+            <if test="phonenumber != null">
+                phonenumber = #{phonenumber},
+            </if>
+            <if test="homephonenumber != null">
+                homephonenumber = #{homephonenumber},
+            </if>
+            <if test="wechat != null and wechat != ''">
+                wechat = #{wechat},
+            </if>
+            <if test="email != null and email != ''">
+                email = #{email},
+            </if>
+            <if test="identity != null and identity != ''">
+                identity = #{identity},
+            </if>
+            <if test="cid != null">
+                cid = #{cid},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from crm.contactperson where id = #{id}
+    </delete>
+
+    <select id="selectAll" resultMap="ContactpersonMap">
+        select
+        id, name, gender, phonenumber, homephonenumber, wechat, email, identity, cid
+        from
+        crm.contactperson
+    </select>
+
+    <select id="selectByCid" resultMap="ContactpersonMap">
+        select
+        id, name, gender, phonenumber, homephonenumber, wechat, email, identity, cid
+        from
+        crm.contactperson
+        where cid = #{ cid }
+    </select>
+
+</mapper>

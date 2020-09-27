@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.dao.CustomerDao">
+
+    <resultMap type="com.example.demo.entity.Customer" id="CustomerMap">
+        <result property="guid" column="guid" jdbcType="INTEGER"/>
+        <result property="username" column="username" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="CustomerMap">
+        select
+          guid, username
+        from crm.customer
+        where guid = #{guid}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="CustomerMap">
+        select
+          guid, username
+        from crm.customer
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="CustomerMap">
+        select
+        guid, username
+        from crm.customer
+        <where>
+            <if test="guid != null">
+                and guid = #{guid}
+            </if>
+            <if test="username != null and username != ''">
+                and username = #{username}
+            </if>
+        </where>
+    </select>
+
+    <!--    查询表内所有信息-->
+    <select id="selectAll" resultMap="CustomerMap">
+        select
+        guid, username
+        from crm.customer
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="guid" useGeneratedKeys="true">
+        insert into crm.customer(username)
+        values (#{username})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update crm.customer
+        <set>
+            <if test="username != null and username != ''">
+                username = #{username},
+            </if>
+        </set>
+        where guid = #{guid}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from crm.customer where guid = #{guid}
+    </delete>
+
+</mapper>
