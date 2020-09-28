@@ -5,3 +5,5 @@
 #### http://localhost:8080/customer/addCustomerInfo?customerUsername=asdfas&contactpersonName=d&contactpersonGender=d&contactpersonPhonenumber=d&contactpersonHomephonenumber=d&contactpersonWechat=d&contactpersonEmail=d&contactpersonIdentity=d&contactaddressTitle=d&contactaddressStampnumber=d&contactaddressCountry=d&contactaddressProvince=d&contactaddressCity=d&contactaddressDistrict=d
 #### INSERT INTO `crm`.`contactaddress`(`id`, `cid`, `title`, `stampnumber`, `country`, `province`, `city`, `district`) VALUES (1, 1, 'fs', 11, 'fas', 'asfd', 'asdf', 'asf');
 #### springboot新增数据为什么返回实例对象
+#### 在添加客户的时候会添加多个联系人和联系地址，先提交一个客户的联系人和联系地址，点击添加可以再添加联系人和联系地址，这时调用单独的添加联系人和联系方式方法
+
