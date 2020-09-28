@@ -53,7 +53,7 @@ public class ContactaddressController {
         contactaddress.setDistrict(contactaddressDistrict);
         contactaddressService.insertCustomer(contactaddress);
 
-        return "hello";
+        return "添加联系地址成功";
     }
 
 }
