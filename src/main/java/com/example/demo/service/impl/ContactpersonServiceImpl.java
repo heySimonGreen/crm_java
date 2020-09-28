@@ -88,4 +88,10 @@ public class ContactpersonServiceImpl implements ContactpersonService {
     public List<Contactperson> selectByCid(Integer cid) {
         return contactpersonDao.selectByCid(cid);
     }
+
+    @Override
+    public Contactperson insertCustomer(Contactperson contactperson) {
+        contactpersonDao.insertCustomer(contactperson);
+        return contactperson;
+    }
 }

@@ -57,4 +57,6 @@ public interface ContactpersonService {
 
     List<Contactperson> selectByCid(Integer cid);
 
+    Contactperson insertCustomer(Contactperson contactperson);
+
 }

@@ -108,4 +108,8 @@
         from crm.contactaddress
     </select>
 
+    <insert id="insertCustomer" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO crm.contactaddress( cid, title, stampnumber, country, province, city, district)
+        VALUES ((select MAX(guid) from crm.customer), #{title}, #{stampnumber}, #{country}, #{province}, #{city}, #{district});
+    </insert>
 </mapper>

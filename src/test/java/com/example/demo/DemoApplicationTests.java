@@ -1,9 +1,12 @@
 package com.example.demo;
 
+import com.example.demo.dao.ContactaddressDao;
 import com.example.demo.dao.ContactpersonDao;
 import com.example.demo.dao.CustomerDao;
+import com.example.demo.entity.Contactaddress;
 import com.example.demo.entity.Contactperson;
 import com.example.demo.entity.Customer;
+import com.example.demo.service.ContactaddressService;
 import com.example.demo.service.ContactpersonService;
 import com.example.demo.service.CustomerService;
 import org.apache.catalina.Service;
@@ -26,6 +29,11 @@ class DemoApplicationTests {
     private ContactpersonService contactpersonService;
     @Autowired
     private ContactpersonDao contactpersonDao;
+
+    @Autowired
+    private ContactaddressService contactaddressService;
+    @Autowired
+    private ContactaddressDao contactaddressDao;
 
     @Test
     void contextLoads() {
@@ -76,6 +84,31 @@ class DemoApplicationTests {
         List<Contactperson> a = new ArrayList<>();
         a = contactpersonDao.selectAll();
         System.out.println(a.get(0).getName());
+    }
+    @Test
+    void test7(){
+        System.out.println("添加客户时，添加联系地址");
+        Contactaddress contactaddress = new Contactaddress();
+        contactaddress.setTitle("test");
+        contactaddress.setStampnumber(110);
+        contactaddress.setCountry("test");
+        contactaddress.setProvince("test");
+        contactaddress.setCity("test");
+        contactaddress.setDistrict("test");
+        contactaddressDao.insertCustomer(contactaddress);
+    }
+    @Test
+    void test8(){
+        System.out.println("添加客户时，添加联系人");
+        Contactperson contactperson = new Contactperson();
+        contactperson.setEmail("test");
+        contactperson.setGender("test");
+        contactperson.setHomephonenumber(444);
+        contactperson.setIdentity("test");
+        contactperson.setPhonenumber(5);
+        contactperson.setName("test");
+        contactperson.setWechat("test");
+        contactpersonDao.insertCustomer(contactperson);
     }
 
 }

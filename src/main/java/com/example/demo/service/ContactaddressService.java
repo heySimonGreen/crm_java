@@ -55,4 +55,6 @@ public interface ContactaddressService {
 
     List<Contactaddress> selectAll();
 
+    Contactaddress insertCustomer(Contactaddress contactaddress);
+
 }

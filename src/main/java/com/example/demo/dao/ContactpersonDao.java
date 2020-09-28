@@ -67,4 +67,6 @@ public interface ContactpersonDao {
 
     List<Contactperson> selectByCid(Integer cid);
 
+    int insertCustomer(Contactperson contactperson);
+
 }

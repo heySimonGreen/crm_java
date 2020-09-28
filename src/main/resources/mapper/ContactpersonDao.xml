@@ -124,4 +124,9 @@
         where cid = #{ cid }
     </select>
 
+    <insert id="insertCustomer" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO crm.contactperson(name, gender, phonenumber, homephonenumber, wechat, email, identity, cid)
+        VALUES (#{name}, #{gender}, #{phonenumber}, #{homephonenumber}, #{wechat}, #{email}, #{identity}, (select MAX(guid) from crm.customer));
+    </insert>
+
 </mapper>

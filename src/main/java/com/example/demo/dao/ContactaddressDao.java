@@ -1,6 +1,7 @@
 package com.example.demo.dao;
 
 import com.example.demo.entity.Contactaddress;
+import com.example.demo.entity.Contactperson;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -64,5 +65,7 @@ public interface ContactaddressDao {
     int deleteById(Integer id);
 
     List<Contactaddress> selectAll();
+
+    int insertCustomer(Contactaddress contactaddress);
 
 }
