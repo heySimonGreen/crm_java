@@ -45,4 +45,21 @@ public class ContactpersonController {
         return this.contactpersonService.selectByCid(cid);
     }
 
+    @GetMapping("insertContactperson")
+    public String insertContactperson(@RequestParam("contactpersonName") String contactpersonName,
+                                      @RequestParam("contactpersonGender") String contactpersonGender, @RequestParam("contactpersonPhonenumber") Integer contactpersonPhonenumber,
+                                      @RequestParam("contactpersonHomephonenumber") Integer contactpersonHomephonenumber, @RequestParam("contactpersonWechat") String contactpersonWechat,
+                                      @RequestParam("contactpersonEmail") String contactpersonEmail, @RequestParam("contactpersonIdentity") String contactpersonIdentity){
+        Contactperson contactperson = new Contactperson();
+        contactperson.setName(contactpersonName);
+        contactperson.setGender(contactpersonGender);
+        contactperson.setPhonenumber(contactpersonPhonenumber);
+        contactperson.setWechat(contactpersonWechat);
+        contactperson.setHomephonenumber(contactpersonHomephonenumber);
+        contactperson.setEmail(contactpersonEmail);
+        contactperson.setIdentity(contactpersonIdentity);
+        contactpersonService.insertCustomer(contactperson);
+        return "添加联系人成功";
+    }
+
 }
