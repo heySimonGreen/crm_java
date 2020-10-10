@@ -57,4 +57,6 @@ public interface ContactaddressService {
 
     Contactaddress insertCustomer(Contactaddress contactaddress);
 
+    List<Contactaddress> selectByCid(Integer Cid);
+
 }

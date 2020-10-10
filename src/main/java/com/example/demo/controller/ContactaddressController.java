@@ -40,6 +40,11 @@ public class ContactaddressController {
         return this.contactaddressService.selectAll();
     }
 
+    @GetMapping("selectByCid")
+    public List<Contactaddress> selectByCid(Integer Cid){
+        return this.contactaddressService.selectByCid(Cid);
+    }
+
     @GetMapping("insertContactaddress")
     public String insertContactaddress(@RequestParam("contactaddressTitle") String contactaddressTitle, @RequestParam("contactaddressStampnumber") Integer contactaddressStampnumber,
                                        @RequestParam("contactaddressCountry") String contactaddressCountry, @RequestParam("contactaddressProvince") String contactaddressProvince,
@@ -53,7 +58,7 @@ public class ContactaddressController {
         contactaddress.setDistrict(contactaddressDistrict);
         contactaddressService.insertCustomer(contactaddress);
 
-        return "添加联系地址成功";
+        return "hello";
     }
 
 }

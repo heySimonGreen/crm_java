@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import javax.annotation.Resource;
 import javax.jnlp.ClipboardService;
 import java.util.ArrayList;
 import java.util.List;
@@ -103,12 +104,22 @@ class DemoApplicationTests {
         Contactperson contactperson = new Contactperson();
         contactperson.setEmail("test");
         contactperson.setGender("test");
-        contactperson.setHomephonenumber(444);
+        contactperson.setHomephonenumber("444");
         contactperson.setIdentity("test");
-        contactperson.setPhonenumber(5);
+        contactperson.setPhonenumber("5");
         contactperson.setName("test");
         contactperson.setWechat("test");
         contactpersonDao.insertCustomer(contactperson);
+    }
+    @Resource
+    private CustomerService customerService2;
+    @Test
+    void test9(){
+        System.out.println("查询所有客户，并带");
+        List<Customer> list = this.customerService2.selectAll();
+        for (int i = 0; i < list.size(); i++) {
+            System.out.println(list.get(i));
+        }
     }
 
 }

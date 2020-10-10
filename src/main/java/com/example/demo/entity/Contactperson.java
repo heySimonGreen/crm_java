@@ -17,9 +17,9 @@ public class Contactperson implements Serializable {
 
     private String gender;
 
-    private Integer phonenumber;
+    private String phonenumber;
 
-    private Integer homephonenumber;
+    private String homephonenumber;
 
     private String wechat;
 
@@ -54,19 +54,19 @@ public class Contactperson implements Serializable {
         this.gender = gender;
     }
 
-    public Integer getPhonenumber() {
+    public String getPhonenumber() {
         return phonenumber;
     }
 
-    public void setPhonenumber(Integer phonenumber) {
+    public void setPhonenumber(String phonenumber) {
         this.phonenumber = phonenumber;
     }
 
-    public Integer getHomephonenumber() {
+    public String getHomephonenumber() {
         return homephonenumber;
     }
 
-    public void setHomephonenumber(Integer homephonenumber) {
+    public void setHomephonenumber(String homephonenumber) {
         this.homephonenumber = homephonenumber;
     }
 

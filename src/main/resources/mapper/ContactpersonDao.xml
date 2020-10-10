@@ -6,8 +6,8 @@
         <result property="id" column="id" jdbcType="INTEGER"/>
         <result property="name" column="name" jdbcType="VARCHAR"/>
         <result property="gender" column="gender" jdbcType="VARCHAR"/>
-        <result property="phonenumber" column="phonenumber" jdbcType="INTEGER"/>
-        <result property="homephonenumber" column="homephonenumber" jdbcType="INTEGER"/>
+        <result property="phonenumber" column="phonenumber" jdbcType="VARCHAR"/>
+        <result property="homephonenumber" column="homephonenumber" jdbcType="VARCHAR"/>
         <result property="wechat" column="wechat" jdbcType="VARCHAR"/>
         <result property="email" column="email" jdbcType="VARCHAR"/>
         <result property="identity" column="identity" jdbcType="VARCHAR"/>

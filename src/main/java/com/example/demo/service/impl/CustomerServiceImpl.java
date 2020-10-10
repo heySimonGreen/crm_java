@@ -80,7 +80,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public List<Customer> selectaAll() {
+    public List<Customer> selectAll() {
         return this.customerDao.selectAll();
     }
 }

@@ -68,4 +68,6 @@ public interface ContactaddressDao {
 
     int insertCustomer(Contactaddress contactaddress);
 
+    List<Contactaddress> selectByCid(Integer cid);
+
 }

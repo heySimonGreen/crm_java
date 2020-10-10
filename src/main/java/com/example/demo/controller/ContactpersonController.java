@@ -47,8 +47,8 @@ public class ContactpersonController {
 
     @GetMapping("insertContactperson")
     public String insertContactperson(@RequestParam("contactpersonName") String contactpersonName,
-                                      @RequestParam("contactpersonGender") String contactpersonGender, @RequestParam("contactpersonPhonenumber") Integer contactpersonPhonenumber,
-                                      @RequestParam("contactpersonHomephonenumber") Integer contactpersonHomephonenumber, @RequestParam("contactpersonWechat") String contactpersonWechat,
+                                      @RequestParam("contactpersonGender") String contactpersonGender, @RequestParam("contactpersonPhonenumber") String contactpersonPhonenumber,
+                                      @RequestParam("contactpersonHomephonenumber") String contactpersonHomephonenumber, @RequestParam("contactpersonWechat") String contactpersonWechat,
                                       @RequestParam("contactpersonEmail") String contactpersonEmail, @RequestParam("contactpersonIdentity") String contactpersonIdentity){
         Contactperson contactperson = new Contactperson();
         contactperson.setName(contactpersonName);

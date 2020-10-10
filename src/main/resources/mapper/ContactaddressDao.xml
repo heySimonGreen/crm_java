@@ -112,4 +112,11 @@
         INSERT INTO crm.contactaddress( cid, title, stampnumber, country, province, city, district)
         VALUES ((select MAX(guid) from crm.customer), #{title}, #{stampnumber}, #{country}, #{province}, #{city}, #{district});
     </insert>
+
+    <select id="selectByCid" resultMap="ContactaddressMap">
+        select
+        id, cid, title, stampnumber, country, province, city, district
+        from crm.contactaddress
+        where cid = #{ cid }
+    </select>
 </mapper>

@@ -53,7 +53,7 @@ public interface CustomerService {
      */
     boolean deleteById(Integer guid);
 
-    List<Customer> selectaAll();
+    List<Customer> selectAll();
 
 
 }
