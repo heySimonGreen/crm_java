@@ -30,3 +30,44 @@
  
  request payload
  
+ 数据库的命名
+ 表单验证 电话、座机、邮箱、 去前后空格
+ 弹窗居中
+ 后端对数据进行验证
+ 地址的存放 不要放文字
+ uuid
+ 移到element-admim
+ 页码设置为中文
+ 提交后自动刷新显示的数据
+ 显示所有客户信息的时候显示下拉，固定高度，参照华夏平台
+ 显示所有用户页面，多选可以删除多个客户
+ 
+ const service = axios.create({
+   baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
+   // withCredentials: true, // send cookies when cross-domain requests
+   timeout: 5000 // request timeout
+ })
+ request.js跨域问题，修改的位置
+ 要使用vue-admin-template自己封装的axios的话，要在request.js文件里面修改，以前修改过，可以找找以前的代码，
+ 不修改的话，请求java后台的数据时会报跨域错误，解决办法是自己写axios请求和发送数据，如下
+     getCustomerDetailIngoByGuid() {
+       this.$axios.post('http://localhost:8080/customer/addCustomer2', { cid: this.guid2 }, { timeout: 3000 })
+         .then(res => {
+           console.log(res)
+           this.$notify({
+             title: '成功',
+             message: '成功',
+             type: 'success',
+             duration: 2000
+           })
+         })
+         .catch(err => {
+           console.log(err)
+         })
+     }
+     
+###这几天最大的问题是以前解决跨域问题时写路由url时都不用前面的http://localhost:8080/,因为以前在requset.js修改过，
+###那样就可以把请求封装在api里面，但这次任务开始的时候好像是自己在GitHub上下载的，并没有修改过request.js文件
+###刚才试了一下，写上前面的http://localhost:8080/，在请求时Request URL: http://localhost:8080/customer/addCustomer2
+###不写是Request URL: http://localhost:9528/customer/addCustomer2，但奇怪的是不写8080时可以正常的用get，而不能用post，
+###以至于我在解决问题时，传递参数用get方法，很吃力，在后端可以看到，处理数据很不方便，至于为什么是9528时能正常使用get请求而不能用post请求需要问老师

@@ -8,6 +8,7 @@ import com.example.demo.entity.Customer;
 import com.example.demo.service.ContactaddressService;
 import com.example.demo.service.ContactpersonService;
 import com.example.demo.service.CustomerService;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.context.support.SimpleThreadScope;
@@ -61,7 +62,7 @@ public class CustomerController {
         return this.customerService.selectAll();
     }
 
-//    返回客户信息并且含有客户联系人和联系地址
+//    返回所有客户信息并且含有客户联系人和联系地址
     @GetMapping("selectAllTest")
     public List selectAllTest() {
         List<Customer> customers = this.customerService.selectAll();
@@ -80,14 +81,15 @@ public class CustomerController {
         }
         return Lists;
     }
+
     //post方法不行，搞了半天只有选择get
-//        @PostMapping(value = "addCustomer")
-//        public String addCustomer(@RequestBody String username){
-////        Map<String,String> m = new HashMap<>();
-////        m.put("ssss","ssss");
-//          System.out.println(username);
-//        return "chenwei";
-//    }
+    @PostMapping (value = "addCustomer2")
+    //这里加@RequestBody会报错，不加不会报错，但同样得不到数据
+    public String addCustomer2(@RequestBody Map<String,Object> data){
+        System.out.println("guid...........");
+        System.out.println(data.get("cid"));
+        return "chenwei";
+    }
 
 //    @PostMapping(value = "addCustomer")
 //    public String addCustomer(HttpServletRequest request, HttpServletResponse response){
@@ -213,6 +215,29 @@ public class CustomerController {
 
     }
 
+    //通过guid查找此客户的所有联系人和联系地址
+    @GetMapping("getCustomerDataByGuid")
+    public JSONObject  getCustomerDataByGuid(@RequestParam Map<String,String> data) throws JSONException {
+        System.out.println("data.............");
+        System.out.println(data);
+        Integer guid = Integer.valueOf(data.get("guid"));
+        System.out.println(data.get("guid"));
+
+        Customer customer = customerService.queryById(guid);
+        System.out.println(customer.getUsername() +" "+ customer.getNotes());
+
+        List<Contactaddress> contactaddressList = this.contactaddressService.selectByCid(guid);
+        System.out.println(contactaddressList);
+
+        List<Contactperson> contactpersonList = this.contactpersonService.selectByCid(guid);
+        System.out.println(contactpersonList.get(2).getName());
+
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("contactaddress", contactaddressList);
+
+
+        return jsonObject;
+    }
 //    @PostMapping(value = "addCustomer",produces="application/json")
 //    public String addCustomer(@RequestBody Customer customer){
 //        return customer.getUsername();
