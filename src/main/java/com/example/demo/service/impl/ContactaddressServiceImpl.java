@@ -84,11 +84,11 @@ public class ContactaddressServiceImpl implements ContactaddressService {
         return contactaddressDao.selectAll();
     }
 
-    @Override
-    public Contactaddress insertCustomer(Contactaddress contactaddress) {
-        contactaddressDao.insertCustomer(contactaddress);
-        return contactaddress;
-    }
+//    @Override
+//    public Contactaddress insertCustomer(Contactaddress contactaddress) {
+//        contactaddressDao.insertCustomer(contactaddress);
+//        return contactaddress;
+//    }
 
     @Override
     public List<Contactaddress> selectByCid(Integer Cid) {

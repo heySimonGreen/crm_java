@@ -14,4 +14,19 @@
 
  [ { "guid": 1, "username": "gsdg" }, { "guid": 3, "username": "asdgasdgfsdafgasd" }, { "guid": 4, "username": "陈伟" }, { "guid": 5, "username": "陈伟" }, { "guid": 8, "username": "写不V字形大风车" }, { "guid": 9, "username": "asdfas" }, { "guid": 10, "username": "asdfas" }, { "guid": 11, "username": "asdfas" } ]
  
- 数据显示时，最后一行的操作，删除是删除这个客户，联系地址和联系人后面需要添加删除和编辑操作吗？感觉可以添加这个操作
+ 数据显示时，最后一行的操作，删除是删除这个客户，联系地址和联系人后面需要添加删除和编辑操作吗？感觉可以添加这个操作\
+ 
+ requestBody 和RequestParam区别，耗时几个小时了都没解决
+ 
+ formData传参数为数组时的写法
+ 
+ url参数中传输对象数组的方案
+ 
+ qs.stringify和JSON.stringify使用和区别 会改变queryString parameter 为request reloading,qs用于get吧，json用于post吧
+ 
+ 去掉@RequestBody不报错，但后端也或许不到传过来的任何数据，
+ 有@RequestBody报错org.springframework.http.converter.HttpMessageNotReadabl
+ org.springframework.http.converter.HttpMessageNotReadableException: I/O error while reading input message; nested exception is org.apache.catalina.connector.ClientAbortException: java.io.EOFException: Unexpected EOF read on the socket
+ 
+ request payload
+ 

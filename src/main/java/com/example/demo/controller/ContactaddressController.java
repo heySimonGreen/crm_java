@@ -45,20 +45,20 @@ public class ContactaddressController {
         return this.contactaddressService.selectByCid(Cid);
     }
 
-    @GetMapping("insertContactaddress")
-    public String insertContactaddress(@RequestParam("contactaddressTitle") String contactaddressTitle, @RequestParam("contactaddressStampnumber") Integer contactaddressStampnumber,
-                                       @RequestParam("contactaddressCountry") String contactaddressCountry, @RequestParam("contactaddressProvince") String contactaddressProvince,
-                                       @RequestParam("contactaddressCity") String contactaddressCity, @RequestParam("contactaddressDistrict") String contactaddressDistrict){
-        Contactaddress contactaddress = new Contactaddress();
-        contactaddress.setTitle(contactaddressTitle);
-        contactaddress.setStampnumber(contactaddressStampnumber);
-        contactaddress.setCountry(contactaddressCountry);
-        contactaddress.setProvince(contactaddressProvince);
-        contactaddress.setCity(contactaddressCity);
-        contactaddress.setDistrict(contactaddressDistrict);
-        contactaddressService.insertCustomer(contactaddress);
-
-        return "hello";
-    }
+//    @GetMapping("insertContactaddress")
+//    public String insertContactaddress(@RequestParam("contactaddressTitle") String contactaddressTitle, @RequestParam("contactaddressStampnumber") Integer contactaddressStampnumber,
+//                                       @RequestParam("contactaddressCountry") String contactaddressCountry, @RequestParam("contactaddressProvince") String contactaddressProvince,
+//                                       @RequestParam("contactaddressCity") String contactaddressCity, @RequestParam("contactaddressDistrict") String contactaddressDistrict){
+//        Contactaddress contactaddress = new Contactaddress();
+//        contactaddress.setTitle(contactaddressTitle);
+//        contactaddress.setStampnumber(contactaddressStampnumber);
+//        contactaddress.setCountry(contactaddressCountry);
+//        contactaddress.setProvince(contactaddressProvince);
+//        contactaddress.setCity(contactaddressCity);
+//        contactaddress.setDistrict(contactaddressDistrict);
+//        contactaddressService.insertCustomer(contactaddress);
+//
+//        return "hello";
+//    }
 
 }

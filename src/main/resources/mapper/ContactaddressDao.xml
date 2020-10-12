@@ -63,9 +63,10 @@
     </select>
 
     <!--新增所有列-->
+<!--    此处只能用于多个添加列，这里不要要给guid，guid找最大的值-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
         insert into crm.contactaddress(cid, title, stampnumber, country, province, city, district)
-        values (#{cid}, #{title}, #{stampnumber}, #{country}, #{province}, #{city}, #{district})
+        values ((select MAX(guid) from crm.customer), #{title}, #{stampnumber}, #{country}, #{province}, #{city}, #{district})
     </insert>
 
     <!--通过主键修改数据-->
@@ -108,10 +109,10 @@
         from crm.contactaddress
     </select>
 
-    <insert id="insertCustomer" keyProperty="id" useGeneratedKeys="true">
-        INSERT INTO crm.contactaddress( cid, title, stampnumber, country, province, city, district)
-        VALUES ((select MAX(guid) from crm.customer), #{title}, #{stampnumber}, #{country}, #{province}, #{city}, #{district});
-    </insert>
+<!--    <insert id="insertCustomer" keyProperty="id" useGeneratedKeys="true">-->
+<!--        INSERT INTO crm.contactaddress( cid, title, stampnumber, country, province, city, district)-->
+<!--        VALUES ((select MAX(guid) from crm.customer), #{title}, #{stampnumber}, #{country}, #{province}, #{city}, #{district});-->
+<!--    </insert>-->
 
     <select id="selectByCid" resultMap="ContactaddressMap">
         select

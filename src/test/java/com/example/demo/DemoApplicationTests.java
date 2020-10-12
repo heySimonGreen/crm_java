@@ -3,19 +3,16 @@ package com.example.demo;
 import com.example.demo.dao.ContactaddressDao;
 import com.example.demo.dao.ContactpersonDao;
 import com.example.demo.dao.CustomerDao;
-import com.example.demo.entity.Contactaddress;
 import com.example.demo.entity.Contactperson;
 import com.example.demo.entity.Customer;
 import com.example.demo.service.ContactaddressService;
 import com.example.demo.service.ContactpersonService;
 import com.example.demo.service.CustomerService;
-import org.apache.catalina.Service;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;
-import javax.jnlp.ClipboardService;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,14 +37,14 @@ class DemoApplicationTests {
     void contextLoads() {
     }
     //增加数据
-    @Test
-    void test1(){
-        System.out.println("增加数据");
-        Customer customer = new Customer();
-        customer.setGuid(7);
-        customer.setUsername("陈伟fvsdfsdafvsd");
-        customerService.insert(customer);
-    }
+//    @Test
+//    void test1(){
+//        System.out.println("增加数据");
+//        Customer customer = new Customer(guid, username, notes);
+//        customer.setGuid(7);
+//        customer.setUsername("陈伟fvsdfsdafvsd");
+//        customerService.insert(customer);
+//    }
     //删除数据
     @Test
     void test2(){
@@ -55,14 +52,14 @@ class DemoApplicationTests {
         customerService.deleteById(7);
     }
     //修改数据
-    @Test
-    void test3(){
-        System.out.println("修改数据");
-        Customer customer = new Customer();
-        customer.setGuid(3);
-        customer.setUsername("asdgasdgfsdafgasd");
-        customerService.update(customer);
-    }
+//    @Test
+//    void test3(){
+//        System.out.println("修改数据");
+//        Customer customer = new Customer(guid, username, notes);
+//        customer.setGuid(3);
+//        customer.setUsername("asdgasdgfsdafgasd");
+//        customerService.update(customer);
+//    }
     //查询数据
     @Test
     void test4(){
@@ -85,18 +82,6 @@ class DemoApplicationTests {
         List<Contactperson> a = new ArrayList<>();
         a = contactpersonDao.selectAll();
         System.out.println(a.get(0).getName());
-    }
-    @Test
-    void test7(){
-        System.out.println("添加客户时，添加联系地址");
-        Contactaddress contactaddress = new Contactaddress();
-        contactaddress.setTitle("test");
-        contactaddress.setStampnumber(110);
-        contactaddress.setCountry("test");
-        contactaddress.setProvince("test");
-        contactaddress.setCity("test");
-        contactaddress.setDistrict("test");
-        contactaddressDao.insertCustomer(contactaddress);
     }
     @Test
     void test8(){

@@ -69,7 +69,7 @@
     <!--新增所有列-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
         insert into crm.contactperson(name, gender, phonenumber, homephonenumber, wechat, email, identity, cid)
-        values (#{name}, #{gender}, #{phonenumber}, #{homephonenumber}, #{wechat}, #{email}, #{identity}, #{cid})
+        values (#{name}, #{gender}, #{phonenumber}, #{homephonenumber}, #{wechat}, #{email}, #{identity}, (select MAX(guid) from crm.customer))
     </insert>
 
     <!--通过主键修改数据-->

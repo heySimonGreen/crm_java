@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import ch.qos.logback.core.net.QueueFactory;
 import com.example.demo.dao.ContactpersonDao;
 import com.example.demo.entity.Contactaddress;
 import com.example.demo.entity.Contactperson;
@@ -9,14 +10,18 @@ import com.example.demo.service.ContactpersonService;
 import com.example.demo.service.CustomerService;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.springframework.context.support.SimpleThreadScope;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.ServletRegistration;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.util.*;
+import java.net.URLDecoder;
 
 /**
  * (Customer)表控制层
@@ -66,42 +71,193 @@ public class CustomerController {
             map.put("contactaddress",contactaddressService.selectByCid(customers.get(i).getGuid()));
             map.put("guid", customers.get(i).getGuid());
             map.put("username",customers.get(i).getUsername());
+            map.put("notes",customers.get(i).getNotes());
+            System.out.println(customers.get(i).getGuid());
+            System.out.println(customers.get(i).getUsername());
+            System.out.println(customers.get(i).getNotes());
             map.put("contactperson", contactpersonService.selectByCid(customers.get(i).getGuid()));
             Lists.add(map);
         }
         return Lists;
     }
+    //post方法不行，搞了半天只有选择get
+//        @PostMapping(value = "addCustomer")
+//        public String addCustomer(@RequestBody String username){
+////        Map<String,String> m = new HashMap<>();
+////        m.put("ssss","ssss");
+//          System.out.println(username);
+//        return "chenwei";
+//    }
 
-    @GetMapping("addCustomerInfo")
-    public String addCustomerInfo(@RequestParam("customerUsername") String customerUsername, @RequestParam("contactpersonName") String contactpersonName,
-                                  @RequestParam("contactpersonGender") String contactpersonGender, @RequestParam("contactpersonPhonenumber") String contactpersonPhonenumber,
-                                  @RequestParam("contactpersonHomephonenumber") String contactpersonHomephonenumber, @RequestParam("contactpersonWechat") String contactpersonWechat,
-                                  @RequestParam("contactpersonEmail") String contactpersonEmail, @RequestParam("contactpersonIdentity") String contactpersonIdentity,
-                                  @RequestParam("contactaddressTitle") String contactaddressTitle, @RequestParam("contactaddressStampnumber") Integer contactaddressStampnumber,
-                                  @RequestParam("contactaddressCountry") String contactaddressCountry, @RequestParam("contactaddressProvince") String contactaddressProvince,
-                                  @RequestParam("contactaddressCity") String contactaddressCity, @RequestParam("contactaddressDistrict") String contactaddressDistrict
-                                  ){
-        Customer customer = new Customer();
-        customer.setUsername(customerUsername);
-        customerService.insert(customer);
-        Contactperson contactperson = new Contactperson();
-        contactperson.setName(contactpersonName);
-        contactperson.setGender(contactpersonGender);
-        contactperson.setPhonenumber(contactpersonPhonenumber);
-        contactperson.setWechat(contactpersonWechat);
-        contactperson.setHomephonenumber(contactpersonHomephonenumber);
-        contactperson.setEmail(contactpersonEmail);
-        contactperson.setIdentity(contactpersonIdentity);
-        contactpersonService.insertCustomer(contactperson);
-        Contactaddress contactaddress = new Contactaddress();
-        contactaddress.setTitle(contactaddressTitle);
-        contactaddress.setStampnumber(contactaddressStampnumber);
-        contactaddress.setCountry(contactaddressCountry);
-        contactaddress.setProvince(contactaddressProvince);
-        contactaddress.setCity(contactaddressCity);
-        contactaddress.setDistrict(contactaddressDistrict);
-        contactaddressService.insertCustomer(contactaddress);
-        return "新增客户成功！";
+//    @PostMapping(value = "addCustomer")
+//    public String addCustomer(HttpServletRequest request, HttpServletResponse response){
+//        System.out.println(request.getAttribute("username").toString());
+//        return "chenwei";
+//    }
+
+    @GetMapping(value = "addCustomer", produces="application/json")
+    public Map<String, String> addCustomer(@RequestParam String customer,@RequestParam String contactaddress,@RequestParam String contactperson) throws UnsupportedEncodingException {
+        //把传递过来的formData解码并放入map中
+        final String charset = "utf-8";
+        customer = URLDecoder.decode(customer, charset);
+        Map<String, String> mapCustomer=new HashMap<String, String>();
+        String[] arr1=customer.split("&");
+        for (int i = 0; i <arr1.length; i++) {
+            String key=arr1[i].substring(0, arr1[i].indexOf("="));
+            String value=arr1[i].substring( arr1[i].indexOf("=")+1);
+            mapCustomer.put(key, value);
+        }
+        System.out.println(mapCustomer);
+        //添加客户信息username、gender
+        Customer customer1 = new Customer();
+        customer1.setNotes("notes");
+        customer1.setUsername(mapCustomer.get("username"));
+        customerService.insert(customer1);
+
+        //批量添加联系人
+        contactperson = URLDecoder.decode(contactperson, charset);
+        Map<String, String> mapcontactperson=new LinkedHashMap<String, String>();
+        String[] arr3=contactperson.split("&");
+        for (int i = 0; i <arr3.length; i++) {
+            String key=arr3[i].substring(0, arr3[i].indexOf("="));
+            String value=arr3[i].substring( arr3[i].indexOf("=")+1);
+            mapcontactperson.put(key, value);
+        }
+        System.out.println(mapcontactperson);
+        List<String> cotactPersonL = new ArrayList<String>();
+        for(Object key : mapcontactperson.keySet()){
+            String value = mapcontactperson.get(key);
+            cotactPersonL.add(value);
+            System.out.println(value);
+        }
+        System.out.println("cotactPersonL.size().....................==="+cotactPersonL.size());
+        for(int j=0;j<(cotactPersonL.size())/7;j++){
+            Contactperson contactperson1= new Contactperson();
+            System.out.println("j================== "+j);
+            String data = new String();
+            for (int i=0+j*7;i<j*7+7;i++){
+                data = cotactPersonL.get(i);
+                System.out.println(i+"      "+ cotactPersonL.get(i));
+                if(i%7==0){
+                    contactperson1.setWechat(data);
+                    contactperson1.setName(data);
+                }else if (i%7 == 1){
+                    contactperson1.setPhonenumber(data);
+                    contactperson1.setGender(data);
+                }else if(i%7 ==2){
+                    contactperson1.setIdentity(data);
+                    contactperson1.setPhonenumber(data);
+                }else if (i%7==3){
+                    contactperson1.setHomephonenumber(data);
+                }else if (i%7==4){
+                    contactperson1.setWechat(data);
+                }else if (i%7==5){
+                    contactperson1.setEmail(data);
+                }else if (i%7==6){
+                    contactperson1.setIdentity(data);
+                }
+            }
+            contactpersonService.insert(contactperson1);
+        }
+
+
+        //批量添加联系地址
+        contactaddress = URLDecoder.decode(contactaddress, charset);
+        Map<String, String> mapContactaddress=new LinkedHashMap<String, String>();
+        System.out.println(contactaddress);
+        String[] arr2=contactaddress.split("&");
+        for (int i = 0; i <arr2.length; i++) {
+            String key=arr2[i].substring(0, arr2[i].indexOf("="));
+            String value=arr2[i].substring( arr2[i].indexOf("=")+1);
+            mapContactaddress.put(key, value);
+        }
+        System.out.println(mapContactaddress);
+        System.out.println(mapContactaddress.size());
+        List<String> cotactAddressL = new ArrayList<String>();
+        for(Object key : mapContactaddress.keySet()){
+            String value = mapContactaddress.get(key);
+            cotactAddressL.add(value);
+            System.out.println(value);
+        }
+        System.out.println("cotactAddressL............");
+        for(int i=0;i<cotactAddressL.size();i++){
+            System.out.println(cotactAddressL.get(i));
+        }
+        System.out.println(cotactAddressL.size()/6);
+        System.out.println((cotactAddressL.size())/6);
+        for(int j=0;j<(cotactAddressL.size())/6;j++){
+            Contactaddress contactaddress1 = new Contactaddress();
+            System.out.println("j================== "+j);
+            String data = new String();
+            for (int i=0+j*6;i<j*6+6;i++){
+                data = cotactAddressL.get(i);
+                System.out.println(i+"      "+ cotactAddressL.get(i));
+                if(i%6==0){
+                    contactaddress1.setTitle(data);
+                }else if (i%6 == 1){
+                    contactaddress1.setStampnumber(Integer.parseInt(data));
+                }else if(i%6 ==2){
+                    contactaddress1.setCountry(data);
+                }else if (i%6==3){
+                    contactaddress1.setProvince(data);
+                }else if (i%6==4){
+                    contactaddress1.setCity(data);
+                }else if (i%6==5){
+                    contactaddress1.setDistrict(data);
+                }
+            }
+            contactaddressService.insert(contactaddress1);
+        }
+
+        return mapContactaddress;
+
     }
+
+//    @PostMapping(value = "addCustomer",produces="application/json")
+//    public String addCustomer(@RequestBody Customer customer){
+//        return customer.getUsername();
+//    }
+
+//
+
+//    @PostMapping(value = "addCustomer")
+//    public String addCustomer(HttpServletRequest req){
+//        String s = (String) req.getAttribute("username");
+//        return s;
+//    }
+
+
+//
+//    @GetMapping("addCustomerInfo")
+//    public String addCustomerInfo(@RequestParam("customerUsername") String customerUsername, @RequestParam("contactpersonName") String contactpersonName,
+//                                  @RequestParam("contactpersonGender") String contactpersonGender, @RequestParam("contactpersonPhonenumber") String contactpersonPhonenumber,
+//                                  @RequestParam("contactpersonHomephonenumber") String contactpersonHomephonenumber, @RequestParam("contactpersonWechat") String contactpersonWechat,
+//                                  @RequestParam("contactpersonEmail") String contactpersonEmail, @RequestParam("contactpersonIdentity") String contactpersonIdentity,
+//                                  @RequestParam("contactaddressTitle") String contactaddressTitle, @RequestParam("contactaddressStampnumber") Integer contactaddressStampnumber,
+//                                  @RequestParam("contactaddressCountry") String contactaddressCountry, @RequestParam("contactaddressProvince") String contactaddressProvince,
+//                                  @RequestParam("contactaddressCity") String contactaddressCity, @RequestParam("contactaddressDistrict") String contactaddressDistrict
+//                                  ){
+//        Customer customer = new Customer();
+//        customer.setUsername(customerUsername);
+//        customerService.insert(customer);
+//        Contactperson contactperson = new Contactperson();
+//        contactperson.setName(contactpersonName);
+//        contactperson.setGender(contactpersonGender);
+//        contactperson.setPhonenumber(contactpersonPhonenumber);
+//        contactperson.setWechat(contactpersonWechat);
+//        contactperson.setHomephonenumber(contactpersonHomephonenumber);
+//        contactperson.setEmail(contactpersonEmail);
+//        contactperson.setIdentity(contactpersonIdentity);
+//        contactpersonService.insertCustomer(contactperson);
+//        Contactaddress contactaddress = new Contactaddress();
+//        contactaddress.setTitle(contactaddressTitle);
+//        contactaddress.setStampnumber(contactaddressStampnumber);
+//        contactaddress.setCountry(contactaddressCountry);
+//        contactaddress.setProvince(contactaddressProvince);
+//        contactaddress.setCity(contactaddressCity);
+//        contactaddress.setDistrict(contactaddressDistrict);
+//        contactaddressService.insertCustomer(contactaddress);
+//        return "新增客户成功！";
+//    }
 
 }

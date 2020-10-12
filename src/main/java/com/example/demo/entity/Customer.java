@@ -15,8 +15,9 @@ public class Customer implements Serializable {
 
     private String username;
 
+    private String notes;
 
-    public Integer getGuid() {
+    public Integer getGuid(){
         return guid;
     }
 
@@ -30,6 +31,14 @@ public class Customer implements Serializable {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
     }
 
 }
