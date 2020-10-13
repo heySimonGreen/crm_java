@@ -55,6 +55,11 @@ public class ContactpersonServiceImpl implements ContactpersonService {
         this.contactpersonDao.insert(contactperson);
         return contactperson;
     }
+    @Override
+    public Contactperson insert2(Contactperson contactperson) {
+        this.contactpersonDao.insert2(contactperson);
+        return contactperson;
+    }
 
     /**
      * 修改数据
@@ -77,6 +82,11 @@ public class ContactpersonServiceImpl implements ContactpersonService {
     @Override
     public boolean deleteById(Integer id) {
         return this.contactpersonDao.deleteById(id) > 0;
+    }
+
+    @Override
+    public boolean deleteByCid(Integer cid) {
+        return this.contactpersonDao.deleteByCid(cid) > 0;
     }
 
     @Override

@@ -56,6 +56,12 @@ public class ContactaddressServiceImpl implements ContactaddressService {
         return contactaddress;
     }
 
+    @Override
+    public Contactaddress insert2(Contactaddress contactaddress) {
+        this.contactaddressDao.insert2(contactaddress);
+        return contactaddress;
+    }
+
     /**
      * 修改数据
      *
@@ -77,6 +83,11 @@ public class ContactaddressServiceImpl implements ContactaddressService {
     @Override
     public boolean deleteById(Integer id) {
         return this.contactaddressDao.deleteById(id) > 0;
+    }
+
+    @Override
+    public boolean deleteByCid(Integer cid) {
+        return this.contactaddressDao.deleteByCid(cid) > 0;
     }
 
     @Override

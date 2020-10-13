@@ -71,3 +71,5 @@
 ###刚才试了一下，写上前面的http://localhost:8080/，在请求时Request URL: http://localhost:8080/customer/addCustomer2
 ###不写是Request URL: http://localhost:9528/customer/addCustomer2，但奇怪的是不写8080时可以正常的用get，而不能用post，
 ###以至于我在解决问题时，传递参数用get方法，很吃力，在后端可以看到，处理数据很不方便，至于为什么是9528时能正常使用get请求而不能用post请求需要问老师
+###刚才在写的时候写了好几个get请求，根据上面的说法，就是get可以用api封装起来，但写post的时候不可以，使用get并且在api中使用的时候要注意修改request中的code,没记错是request.js中
+我在后台设置了跨域，就是加了一个@crossing注解，可能是这个注解让9525端口可以访问到，但是当时post的时候不行了，应该是跨域的问题

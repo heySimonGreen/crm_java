@@ -53,8 +53,8 @@ public class CustomerController {
      * @return 单条数据
      */
     @GetMapping("selectOne")
-    public Customer selectOne(Integer id) {
-        return this.customerService.queryById(id);
+    public Customer selectOne(Integer cid) {
+        return this.customerService.queryById(cid);
     }
 
     @GetMapping("selectAll")
@@ -98,6 +98,7 @@ public class CustomerController {
 //    }
 
     @GetMapping(value = "addCustomer", produces="application/json")
+    //这个是以前没有解决不能提交post亲求时写的，很笨的办法，后面有时间了改为post肯定少很多代码，特别是对象直接转换为实体
     public Map<String, String> addCustomer(@RequestParam String customer,@RequestParam String contactaddress,@RequestParam String contactperson) throws UnsupportedEncodingException {
         //把传递过来的formData解码并放入map中
         final String charset = "utf-8";
@@ -159,7 +160,7 @@ public class CustomerController {
                     contactperson1.setIdentity(data);
                 }
             }
-            contactpersonService.insert(contactperson1);
+            contactpersonService.insert2(contactperson1);
         }
 
 
@@ -208,35 +209,22 @@ public class CustomerController {
                     contactaddress1.setDistrict(data);
                 }
             }
-            contactaddressService.insert(contactaddress1);
+            contactaddressService.insert2(contactaddress1);
         }
 
         return mapContactaddress;
 
     }
 
-    //通过guid查找此客户的所有联系人和联系地址
-    @GetMapping("getCustomerDataByGuid")
-    public JSONObject  getCustomerDataByGuid(@RequestParam Map<String,String> data) throws JSONException {
-        System.out.println("data.............");
-        System.out.println(data);
-        Integer guid = Integer.valueOf(data.get("guid"));
-        System.out.println(data.get("guid"));
-
-        Customer customer = customerService.queryById(guid);
-        System.out.println(customer.getUsername() +" "+ customer.getNotes());
-
-        List<Contactaddress> contactaddressList = this.contactaddressService.selectByCid(guid);
-        System.out.println(contactaddressList);
-
-        List<Contactperson> contactpersonList = this.contactpersonService.selectByCid(guid);
-        System.out.println(contactpersonList.get(2).getName());
-
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("contactaddress", contactaddressList);
-
-
-        return jsonObject;
+    @DeleteMapping("deleteAllById") //通过guid删除客户信息、联系人、联系地址
+    public String deleteAllById(Integer id){
+//        return this.contactpersonService.deleteById(id);
+        System.out.println("...............");
+        System.out.println(id);
+        contactpersonService.deleteByCid(id);
+        contactaddressService.deleteByCid(id);
+        customerService.deleteById(id);
+        return "this.contactpersonService.deleteById(id)";
     }
 //    @PostMapping(value = "addCustomer",produces="application/json")
 //    public String addCustomer(@RequestBody Customer customer){

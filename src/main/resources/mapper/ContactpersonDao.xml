@@ -69,6 +69,11 @@
     <!--新增所有列-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
         insert into crm.contactperson(name, gender, phonenumber, homephonenumber, wechat, email, identity, cid)
+        values (#{name}, #{gender}, #{phonenumber}, #{homephonenumber}, #{wechat}, #{email}, #{identity}, #{cid})
+    </insert>
+
+    <insert id="insert2" keyProperty="id" useGeneratedKeys="true">
+        insert into crm.contactperson(name, gender, phonenumber, homephonenumber, wechat, email, identity, cid)
         values (#{name}, #{gender}, #{phonenumber}, #{homephonenumber}, #{wechat}, #{email}, #{identity}, (select MAX(guid) from crm.customer))
     </insert>
 
@@ -128,5 +133,9 @@
         INSERT INTO crm.contactperson(name, gender, phonenumber, homephonenumber, wechat, email, identity, cid)
         VALUES (#{name}, #{gender}, #{phonenumber}, #{homephonenumber}, #{wechat}, #{email}, #{identity}, (select MAX(guid) from crm.customer));
     </insert>
+
+    <delete id="deleteByCid">
+        delete from crm.contactperson where cid = #{cid}
+    </delete>
 
 </mapper>

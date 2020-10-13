@@ -36,6 +36,7 @@ public interface ContactpersonService {
      * @return 实例对象
      */
     Contactperson insert(Contactperson contactperson);
+    Contactperson insert2(Contactperson contactperson);
 
     /**
      * 修改数据
@@ -52,6 +53,8 @@ public interface ContactpersonService {
      * @return 是否成功
      */
     boolean deleteById(Integer id);
+
+    boolean deleteByCid(Integer cid);
 
     List<Contactperson> selectAll();
 

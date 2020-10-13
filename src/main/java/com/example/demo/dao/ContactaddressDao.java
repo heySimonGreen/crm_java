@@ -47,6 +47,7 @@ public interface ContactaddressDao {
      * @return 影响行数
      */
     int insert(Contactaddress contactaddress);
+    int insert2(Contactaddress contactaddress);
 
     /**
      * 修改数据
@@ -69,5 +70,8 @@ public interface ContactaddressDao {
 //    int insertCustomer(Contactaddress contactaddress);
 
     List<Contactaddress> selectByCid(Integer cid);
+
+    //通过cid删除整行信息
+    int deleteByCid(Integer cid);
 
 }

@@ -36,6 +36,7 @@ public interface ContactaddressService {
      * @return 实例对象
      */
     Contactaddress insert(Contactaddress contactaddress);
+    Contactaddress insert2(Contactaddress contactaddress);
 
     /**
      * 修改数据
@@ -52,6 +53,8 @@ public interface ContactaddressService {
      * @return 是否成功
      */
     boolean deleteById(Integer id);
+    //通过cid删除整行信息
+    boolean deleteByCid(Integer cid);
 
     List<Contactaddress> selectAll();
 
