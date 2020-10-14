@@ -46,6 +46,13 @@
         from crm.customer
     </select>
 
+    <select id="fuzzyQueryByName" resultMap="CustomerMap">
+        select
+        guid, username, notes
+        from crm.customer
+        WHERE username LIKE CONCAT(CONCAT('%',#{username},'%'))
+    </select>
+
     <!--新增所有列-->
     <insert id="insert" keyProperty="guid" useGeneratedKeys="true">
         insert into crm.customer(username, notes)

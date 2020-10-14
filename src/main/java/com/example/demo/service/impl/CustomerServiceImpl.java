@@ -83,4 +83,9 @@ public class CustomerServiceImpl implements CustomerService {
     public List<Customer> selectAll() {
         return this.customerDao.selectAll();
     }
+
+    @Override
+    public List<Customer> fuzzyQueryByName(String username) {
+        return this.customerDao.fuzzyQueryByName(username);
+    }
 }

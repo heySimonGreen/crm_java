@@ -82,6 +82,32 @@ public class CustomerController {
         return Lists;
     }
 
+
+    @PostMapping("searchInputButton")
+    public List searchInputButton(@RequestBody Map<String,String> data) {
+        System.out.println("username..................................");
+        System.out.println(data);
+        System.out.println(data.get("input"));
+        String username = data.get("input");
+        List<Customer> customers = this.customerService.fuzzyQueryByName(username);
+
+        List<Map<String, Object>> Lists = new ArrayList<Map<String, Object>>();
+        for (int i = 0; i < customers.size(); i++) {
+            Map<String,Object> map = new HashMap<String,Object>();
+            map.put("contactaddress",contactaddressService.selectByCid(customers.get(i).getGuid()));
+            map.put("guid", customers.get(i).getGuid());
+            map.put("username",customers.get(i).getUsername());
+            map.put("notes",customers.get(i).getNotes());
+            System.out.println(customers.get(i).getGuid());
+            System.out.println(customers.get(i).getUsername());
+            System.out.println(customers.get(i).getNotes());
+            map.put("contactperson", contactpersonService.selectByCid(customers.get(i).getGuid()));
+            Lists.add(map);
+        }
+        return Lists;
+    }
+
+
     //post方法不行，搞了半天只有选择get
     @PostMapping (value = "addCustomer2")
     //这里加@RequestBody会报错，不加不会报错，但同样得不到数据
