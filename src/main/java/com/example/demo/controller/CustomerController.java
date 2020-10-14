@@ -91,6 +91,18 @@ public class CustomerController {
         return "chenwei";
     }
 
+    @PostMapping (value = "batchDeletAllCustomerByGuid")
+    public String batchDeletAllCustomerByGuid(@RequestBody List<Integer> guid){
+        System.out.println("guid...........");
+        System.out.println(guid);
+        for(int i=0;i<guid.size();i++){
+            contactpersonService.deleteByCid(guid.get(i));
+            contactaddressService.deleteByCid(guid.get(i));
+            customerService.deleteById(guid.get(i));
+        }
+        return "batchDeletAllCustomerByGuid successful";
+    }
+
 //    @PostMapping(value = "addCustomer")
 //    public String addCustomer(HttpServletRequest request, HttpServletResponse response){
 //        System.out.println(request.getAttribute("username").toString());
