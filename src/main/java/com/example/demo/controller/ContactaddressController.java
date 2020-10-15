@@ -81,6 +81,9 @@ public class ContactaddressController {
     public String updateAddressItem(@RequestBody Contactaddress contactaddress){
 //        System.out.println(contactperson.getEmail());
         contactaddressService.update(contactaddress);
+        System.out.println(contactaddress);
+        System.out.println(contactaddress.getDetaileara());
+        System.out.println(contactaddress.getDistrict());
         return "updateAddressItem";
     }
 

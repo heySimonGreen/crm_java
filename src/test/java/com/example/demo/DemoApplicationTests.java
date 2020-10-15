@@ -116,5 +116,10 @@ class DemoApplicationTests {
             System.out.println(list.get(i).getUsername() + " " + list.get(i).getNotes() + " " + list.get(i).getGuid());
         }
     }
+    @Test
+    void test11(){
+        System.out.println("selectbycid");
+        System.out.println(contactaddressDao.selectByCid(84));
+    }
 
 }

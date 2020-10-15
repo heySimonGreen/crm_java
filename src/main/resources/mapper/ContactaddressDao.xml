@@ -11,12 +11,13 @@
         <result property="province" column="province" jdbcType="VARCHAR"/>
         <result property="city" column="city" jdbcType="VARCHAR"/>
         <result property="district" column="district" jdbcType="VARCHAR"/>
+        <result property="detaileara" column="detaileara" jdbcType="VARCHAR"/>
     </resultMap>
 
     <!--查询单个-->
     <select id="queryById" resultMap="ContactaddressMap">
         select
-          id, cid, title, stampnumber, country, province, city, district
+          id, cid, title, stampnumber, country, province, city, district, detaileara
         from crm.contactaddress
         where id = #{id}
     </select>
@@ -24,7 +25,7 @@
     <!--查询指定行数据-->
     <select id="queryAllByLimit" resultMap="ContactaddressMap">
         select
-          id, cid, title, stampnumber, country, province, city, district
+          id, cid, title, stampnumber, country, province, city, district, detaileara
         from crm.contactaddress
         limit #{offset}, #{limit}
     </select>
@@ -32,7 +33,7 @@
     <!--通过实体作为筛选条件查询-->
     <select id="queryAll" resultMap="ContactaddressMap">
         select
-        id, cid, title, stampnumber, country, province, city, district
+        id, cid, title, stampnumber, country, province, city, district, detaileara
         from crm.contactaddress
         <where>
             <if test="id != null">
@@ -59,18 +60,21 @@
             <if test="district != null and district != ''">
                 and district = #{district}
             </if>
+            <if test="detaileara != null and detaileara != ''">
+                and detaileara = #{detaileara}
+            </if>
         </where>
     </select>
 
     <!--新增所有列-->
 <!--    此处只能用于多个添加列，这里不要要给guid，guid找最大的值-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
-        insert into crm.contactaddress(cid, title, stampnumber, country, province, city, district)
-        values (#{cid}, #{title}, #{stampnumber}, #{country}, #{province}, #{city}, #{district})
+        insert into crm.contactaddress(cid, title, stampnumber, country, province, city, district, detaileara)
+        values (#{cid}, #{title}, #{stampnumber}, #{country}, #{province}, #{city}, #{district}, #{detaileara})
     </insert>
     <insert id="insert2" keyProperty="id" useGeneratedKeys="true">
-        insert into crm.contactaddress(cid, title, stampnumber, country, province, city, district)
-        values ((select MAX(guid) from crm.customer), #{title}, #{stampnumber}, #{country}, #{province}, #{city}, #{district})
+        insert into crm.contactaddress(cid, title, stampnumber, country, province, city, district, detaileara)
+        values ((select MAX(guid) from crm.customer), #{title}, #{stampnumber}, #{country}, #{province}, #{city}, #{district}, #{detaileara})
     </insert>
 
     <!--通过主键修改数据-->
@@ -95,6 +99,9 @@
             <if test="city != null and city != ''">
                 city = #{city},
             </if>
+            <if test="detaileara != null and detaileara != ''">
+                district = #{detaileara},
+            </if>
             <if test="district != null and district != ''">
                 district = #{district},
             </if>
@@ -109,7 +116,7 @@
 
     <select id="selectAll" resultMap="ContactaddressMap">
         select
-        id, cid, title, stampnumber, country, province, city, district
+        id, cid, title, stampnumber, country, province, city, detaileara, district
         from crm.contactaddress
     </select>
 
@@ -120,7 +127,7 @@
 
     <select id="selectByCid" resultMap="ContactaddressMap">
         select
-        id, cid, title, stampnumber, country, province, city, district
+        id, cid, title, stampnumber, country, province, city, district, detaileara
         from crm.contactaddress
         where cid = #{ cid }
     </select>

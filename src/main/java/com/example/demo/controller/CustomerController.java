@@ -8,6 +8,8 @@ import com.example.demo.entity.Customer;
 import com.example.demo.service.ContactaddressService;
 import com.example.demo.service.ContactpersonService;
 import com.example.demo.service.CustomerService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -73,9 +75,9 @@ public class CustomerController {
             map.put("guid", customers.get(i).getGuid());
             map.put("username",customers.get(i).getUsername());
             map.put("notes",customers.get(i).getNotes());
-            System.out.println(customers.get(i).getGuid());
-            System.out.println(customers.get(i).getUsername());
-            System.out.println(customers.get(i).getNotes());
+//            System.out.println(customers.get(i).getGuid());
+//            System.out.println(customers.get(i).getUsername());
+//            System.out.println(customers.get(i).getNotes());
             map.put("contactperson", contactpersonService.selectByCid(customers.get(i).getGuid()));
             Lists.add(map);
         }
@@ -134,6 +136,36 @@ public class CustomerController {
 //        System.out.println(request.getAttribute("username").toString());
 //        return "chenwei";
 //    }
+    @PostMapping(value = "addCustomer3")
+    public String addCustomer3(@RequestBody Map<String, Object> data) throws JsonProcessingException {
+        System.out.println(data.get("notes"));
+        System.out.println(data.get("username"));
+        System.out.println(data.get("contactaddressList"));
+        System.out.println(data.get("contactpersonList"));
+        System.out.println("........................");
+        //add customer entity to mysql
+        Customer customer = new Customer();
+        customer.setUsername(String.valueOf(data.get("username")));
+        customer.setNotes(String.valueOf(data.get("notes")));
+        customerService.insert(customer);
+        //add contactAddress to mysql
+        List<Object> objectListAddress = (List<Object>) data.get("contactaddressList");
+        for(int i=0;i<objectListAddress.size();i++){
+            ObjectMapper objectMapper = new ObjectMapper();
+            String jsonInfoAddress = objectMapper.writeValueAsString(objectListAddress.get(i));
+            Contactaddress contactaddress = objectMapper.readValue(jsonInfoAddress,Contactaddress.class);
+            contactaddressService.insert2(contactaddress);
+        }
+        //add contactperson to mysql
+        List<Object> objectLisPerson = (List<Object>) data.get("contactpersonList");
+        for(int i=0;i<objectLisPerson.size();i++){
+            ObjectMapper objectMapper = new ObjectMapper();
+            String jsonInfoAddress = objectMapper.writeValueAsString(objectLisPerson.get(i));
+            Contactperson contactperson = objectMapper.readValue(jsonInfoAddress,Contactperson.class);
+            contactpersonService.insert2(contactperson);
+        }
+        return "chenwei";
+    }
 
     @GetMapping(value = "addCustomer", produces="application/json")
     //这个是以前没有解决不能提交post亲求时写的，很笨的办法，后面有时间了改为post肯定少很多代码，特别是对象直接转换为实体

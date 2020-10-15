@@ -27,6 +27,8 @@ public class Contactaddress implements Serializable {
 
     private String district;
 
+    private String detaileara;
+
 
     public Integer getId() {
         return id;
@@ -92,4 +94,11 @@ public class Contactaddress implements Serializable {
         this.district = district;
     }
 
+    public String getDetaileara() {
+        return detaileara;
+    }
+
+    public void setDetaileara(String detaileara) {
+        this.detaileara = detaileara;
+    }
 }
