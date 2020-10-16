@@ -3,6 +3,7 @@ package com.example.demo;
 import com.example.demo.dao.ContactaddressDao;
 import com.example.demo.dao.ContactpersonDao;
 import com.example.demo.dao.CustomerDao;
+import com.example.demo.entity.Contactaddress;
 import com.example.demo.entity.Contactperson;
 import com.example.demo.entity.Customer;
 import com.example.demo.service.ContactaddressService;
@@ -118,8 +119,22 @@ class DemoApplicationTests {
     }
     @Test
     void test11(){
-        System.out.println("selectbycid");
+        System.out.println("insert");
+        Customer customer = new Customer();
+        customer.setNotes("bbbbbb");
+        customer.setUsername("bbbbbb");
+        customer.setRole(1);
+        customerDao.insert(customer);
         System.out.println(contactaddressDao.selectByCid(84));
+    }    @Test
+    void test12(){
+        System.out.println("updateAddressItem");
+        Contactaddress contactaddress = new Contactaddress();
+        contactaddress.setCountry("中国");
+        contactaddress.setId(131);
+        contactaddress.setProvince("中国");
+        contactaddress.setDetaileara("detaileara");
+        contactaddressDao.update(contactaddress);
     }
 
 }

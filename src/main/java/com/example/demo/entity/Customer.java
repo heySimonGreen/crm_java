@@ -17,6 +17,8 @@ public class Customer implements Serializable {
 
     private String notes;
 
+    private Integer role;
+
     public Integer getGuid(){
         return guid;
     }
@@ -41,4 +43,11 @@ public class Customer implements Serializable {
         this.notes = notes;
     }
 
+    public Integer getRole() {
+        return role;
+    }
+
+    public void setRole(Integer role) {
+        this.role = role;
+    }
 }

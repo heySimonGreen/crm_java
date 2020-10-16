@@ -99,11 +99,11 @@
             <if test="city != null and city != ''">
                 city = #{city},
             </if>
-            <if test="detaileara != null and detaileara != ''">
-                district = #{detaileara},
-            </if>
             <if test="district != null and district != ''">
                 district = #{district},
+            </if>
+            <if test="detaileara != null">
+                detaileara = #{detaileara},
             </if>
         </set>
         where id = #{id}

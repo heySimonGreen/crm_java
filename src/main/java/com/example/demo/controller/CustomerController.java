@@ -75,6 +75,7 @@ public class CustomerController {
             map.put("guid", customers.get(i).getGuid());
             map.put("username",customers.get(i).getUsername());
             map.put("notes",customers.get(i).getNotes());
+            map.put("role",customers.get(i).getRole());
 //            System.out.println(customers.get(i).getGuid());
 //            System.out.println(customers.get(i).getUsername());
 //            System.out.println(customers.get(i).getNotes());
@@ -147,6 +148,9 @@ public class CustomerController {
         Customer customer = new Customer();
         customer.setUsername(String.valueOf(data.get("username")));
         customer.setNotes(String.valueOf(data.get("notes")));
+        customer.setNotes(String.valueOf(data.get("notes")));
+        customer.setRole(Integer.parseInt(String.valueOf(data.get("role"))));
+        System.out.println(customer.getRole());
         customerService.insert(customer);
         //add contactAddress to mysql
         List<Object> objectListAddress = (List<Object>) data.get("contactaddressList");
