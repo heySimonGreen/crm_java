@@ -56,7 +56,9 @@ public interface CustomerService {
     List<Customer> selectAll();
 
     //模糊查询，通过usernamename查询所有username为他的数据
-    List<Customer> fuzzyQueryByName(String username);
+    List<Customer> fuzzyQueryByName(String username, Integer role);
+
+    List<Customer> queryAll(Customer customer);
 
 
 }

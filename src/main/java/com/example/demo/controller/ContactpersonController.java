@@ -80,10 +80,10 @@ public class ContactpersonController {
     public String addContactPerson(@RequestBody Map<String ,Object> map) throws JsonProcessingException {
         System.out.println(map.get("data"));
         System.out.println(map.get("cid"));
-        Map<String,String> map1 = (Map<String, String>) map.get("cid");
-        int id = Integer.valueOf(map1.get("cid"));
-//        Map<String,Integer> map1 = (Map<String, Integer>) map.get("cid");
-//        int id = map1.get("cid");
+//        Map<String,String> map1 = (Map<String, String>) map.get("cid");
+//        int id = Integer.valueOf(map1.get("cid"));
+        Map<String,Integer> map1 = (Map<String, Integer>) map.get("cid");
+        int id = map1.get("cid");
         System.out.println(map1.get("cid"));
         System.out.println("map1.get(cid)");
 

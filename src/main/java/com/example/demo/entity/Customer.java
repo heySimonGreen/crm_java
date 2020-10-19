@@ -19,6 +19,10 @@ public class Customer implements Serializable {
 
     private Integer role;
 
+    private Integer adminid;
+
+    private Integer isdelet;
+
     public Integer getGuid(){
         return guid;
     }
@@ -49,5 +53,20 @@ public class Customer implements Serializable {
 
     public void setRole(Integer role) {
         this.role = role;
+    }
+    public Integer getAdminid() {
+        return adminid;
+    }
+
+    public void setAdminid(Integer adminid) {
+        this.adminid = adminid;
+    }
+
+    public Integer getIsdelet() {
+        return isdelet;
+    }
+
+    public void setIsdelet(Integer isdelet) {
+        this.isdelet = isdelet;
     }
 }

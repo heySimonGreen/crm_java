@@ -85,7 +85,12 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public List<Customer> fuzzyQueryByName(String username) {
-        return this.customerDao.fuzzyQueryByName(username);
+    public List<Customer> fuzzyQueryByName(String username, Integer role) {
+        return this.customerDao.fuzzyQueryByName(username, role);
+    }
+
+    @Override
+    public List<Customer> queryAll(Customer customer) {
+        return this.customerDao.queryAll(customer);
     }
 }

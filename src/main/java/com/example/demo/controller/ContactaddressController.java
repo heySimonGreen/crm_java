@@ -60,6 +60,12 @@ public class ContactaddressController {
         System.out.println(map.get("cid"));
 //        Map<String,String> map1 = (Map<String, String>) map.get("cid");
 //        int id = Integer.valueOf(map1.get("cid"));
+//        if(map.get("cie") instanceof Map<String, Integer>){
+//            Map<String,Integer> map1 = (Map<String, Integer>) map.get("cid");
+//            System.out.println("yes");
+//        }else {
+//            System.out.println("no");
+//        }
         Map<String,Integer> map1 = (Map<String, Integer>) map.get("cid");
         int id = map1.get("cid");
         System.out.println(map1.get("cid"));

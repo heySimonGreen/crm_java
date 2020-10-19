@@ -108,15 +108,15 @@ class DemoApplicationTests {
         }
     }
 
-    @Test
-    void test10(){
-        System.out.println("模糊查询");
-        List<Customer> list = this.customerService.fuzzyQueryByName("a");
-        for (int i = 0; i < list.size(); i++) {
-            System.out.println("list.get(i).getUsername() + \" \" + list.get(i).getNotes() + \" \" + list.get(i).getGuid()");
-            System.out.println(list.get(i).getUsername() + " " + list.get(i).getNotes() + " " + list.get(i).getGuid());
-        }
-    }
+//    @Test
+//    void test10(){
+//        System.out.println("模糊查询");
+//        List<Customer> list = this.customerService.fuzzyQueryByName("a");
+//        for (int i = 0; i < list.size(); i++) {
+//            System.out.println("list.get(i).getUsername() + \" \" + list.get(i).getNotes() + \" \" + list.get(i).getGuid()");
+//            System.out.println(list.get(i).getUsername() + " " + list.get(i).getNotes() + " " + list.get(i).getGuid());
+//        }
+//    }
     @Test
     void test11(){
         System.out.println("insert");

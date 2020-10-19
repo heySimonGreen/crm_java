@@ -10,6 +10,7 @@ import com.example.demo.service.ContactpersonService;
 import com.example.demo.service.CustomerService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.ibatis.jdbc.Null;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -25,6 +26,8 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.*;
 import java.net.URLDecoder;
+
+import static java.lang.Integer.*;
 
 /**
  * (Customer)表控制层
@@ -66,23 +69,54 @@ public class CustomerController {
 
 //    返回所有客户信息并且含有客户联系人和联系地址
     @GetMapping("selectAllTest")
-    public List selectAllTest() {
-        List<Customer> customers = this.customerService.selectAll();
+    public Object selectAllTest(Integer adminid,Integer pagesize,Integer currentPage) {
+        System.out.println("adminid/....................");
+        System.out.println(adminid);
+        Customer customer =new Customer();
+        customer.setIsdelet(0);
+        System.out.println(customer.getIsdelet());
+        System.out.println("customer.getIsdelet()");
+        //adminid 为1是超级管理员，查看全部信息，其他为普通管理员，只能看到自己添加的信息
         List<Map<String, Object>> Lists = new ArrayList<Map<String, Object>>();
-        for (int i = 0; i < customers.size(); i++) {
-            Map<String,Object> map = new HashMap<String,Object>();
-            map.put("contactaddress",contactaddressService.selectByCid(customers.get(i).getGuid()));
-            map.put("guid", customers.get(i).getGuid());
-            map.put("username",customers.get(i).getUsername());
-            map.put("notes",customers.get(i).getNotes());
-            map.put("role",customers.get(i).getRole());
-//            System.out.println(customers.get(i).getGuid());
-//            System.out.println(customers.get(i).getUsername());
-//            System.out.println(customers.get(i).getNotes());
-            map.put("contactperson", contactpersonService.selectByCid(customers.get(i).getGuid()));
-            Lists.add(map);
+        if(adminid == 1){
+            List<Customer> customers = this.customerService.queryAll(customer);
+            for (int i = 0; i < customers.size(); i++) {
+                Map<String,Object> map = new HashMap<String,Object>();
+                map.put("contactaddress",contactaddressService.selectByCid(customers.get(i).getGuid()));
+                map.put("guid", customers.get(i).getGuid());
+                map.put("username",customers.get(i).getUsername());
+                map.put("notes",customers.get(i).getNotes());
+                map.put("role",customers.get(i).getRole());
+                map.put("contactperson", contactpersonService.selectByCid(customers.get(i).getGuid()));
+                Lists.add(map);
+            }
+        }else {
+            customer.setAdminid(adminid);
+            List<Customer> customers = this.customerService.queryAll(customer);
+            for (int i = 0; i < customers.size(); i++) {
+                Map<String,Object> map = new HashMap<String,Object>();
+                map.put("contactaddress",contactaddressService.selectByCid(customers.get(i).getGuid()));
+                map.put("guid", customers.get(i).getGuid());
+                map.put("username",customers.get(i).getUsername());
+                map.put("notes",customers.get(i).getNotes());
+                map.put("role",customers.get(i).getRole());
+                map.put("contactperson", contactpersonService.selectByCid(customers.get(i).getGuid()));
+                Lists.add(map);
+            }
         }
-        return Lists;
+        System.out.println(pagesize);
+        System.out.println(currentPage);
+        int start = (currentPage - 1)*pagesize;
+        int end = currentPage*pagesize;
+        if(end >= Lists.size()){
+            end = Lists.size();
+        }
+        List<Map<String, Object>> resultLists = Lists.subList(start , end);
+        int totalPage = Lists.size();
+        Map<String, Object> resultMap = new HashMap<>();
+        resultMap.put("totalPage",totalPage);
+        resultMap.put("data", resultLists);
+        return resultMap;
     }
 
 
@@ -91,8 +125,18 @@ public class CustomerController {
         System.out.println("username..................................");
         System.out.println(data);
         System.out.println(data.get("input"));
+        System.out.println(data.get("role"));
         String username = data.get("input");
-        List<Customer> customers = this.customerService.fuzzyQueryByName(username);
+//        int role = parseInt(data.get("role"));
+        Integer role = Integer.valueOf(data.get("role"));
+        if(role == 2) role = null;
+        List<Customer> customers = this.customerService.fuzzyQueryByName(username, role);
+
+        for(int i = 0;i<customers.size();i++){
+            if(customers.get(i).getIsdelet() == 1){
+                customers.remove(i);
+            }
+        }
 
         List<Map<String, Object>> Lists = new ArrayList<Map<String, Object>>();
         for (int i = 0; i < customers.size(); i++) {
@@ -101,6 +145,9 @@ public class CustomerController {
             map.put("guid", customers.get(i).getGuid());
             map.put("username",customers.get(i).getUsername());
             map.put("notes",customers.get(i).getNotes());
+            map.put("role",customers.get(i).getRole());
+            map.put("isdelet",customers.get(i).getIsdelet());
+            map.put("adminid",customers.get(i).getAdminid());
             System.out.println(customers.get(i).getGuid());
             System.out.println(customers.get(i).getUsername());
             System.out.println(customers.get(i).getNotes());
@@ -125,9 +172,16 @@ public class CustomerController {
         System.out.println("guid...........");
         System.out.println(guid);
         for(int i=0;i<guid.size();i++){
-            contactpersonService.deleteByCid(guid.get(i));
-            contactaddressService.deleteByCid(guid.get(i));
-            customerService.deleteById(guid.get(i));
+//            contactpersonService.deleteByCid(guid.get(i));
+//            contactaddressService.deleteByCid(guid.get(i));
+//            customerService.deleteById(guid.get(i));
+            //下面是假删除，修改客户状态
+            Customer customer = new Customer();
+            customer = customerService.queryById(guid.get(i));
+            customer.setIsdelet(1);
+            System.out.println("customer info.....");
+            System.out.println(customer.getUsername() + " " + customer.getGuid() + " " + customer.getNotes());
+            customerService.update(customer);
         }
         return "batchDeletAllCustomerByGuid successful";
     }
@@ -141,6 +195,8 @@ public class CustomerController {
     public String addCustomer3(@RequestBody Map<String, Object> data) throws JsonProcessingException {
         System.out.println(data.get("notes"));
         System.out.println(data.get("username"));
+        System.out.println(data.get("isdelet"));
+        System.out.println(data.get("adminid"));
         System.out.println(data.get("contactaddressList"));
         System.out.println(data.get("contactpersonList"));
         System.out.println("........................");
@@ -149,7 +205,11 @@ public class CustomerController {
         customer.setUsername(String.valueOf(data.get("username")));
         customer.setNotes(String.valueOf(data.get("notes")));
         customer.setNotes(String.valueOf(data.get("notes")));
-        customer.setRole(Integer.parseInt(String.valueOf(data.get("role"))));
+
+        customer.setRole(parseInt(String.valueOf(data.get("role"))));
+        customer.setIsdelet(parseInt(String.valueOf(data.get("isdelet"))));
+        customer.setAdminid(parseInt(String.valueOf(data.get("adminid"))));
+
         System.out.println(customer.getRole());
         customerService.insert(customer);
         //add contactAddress to mysql
@@ -272,7 +332,7 @@ public class CustomerController {
                 if(i%6==0){
                     contactaddress1.setTitle(data);
                 }else if (i%6 == 1){
-                    contactaddress1.setStampnumber(Integer.parseInt(data));
+                    contactaddress1.setStampnumber(parseInt(data));
                 }else if(i%6 ==2){
                     contactaddress1.setCountry(data);
                 }else if (i%6==3){
@@ -295,9 +355,14 @@ public class CustomerController {
 //        return this.contactpersonService.deleteById(id);
         System.out.println("...............");
         System.out.println(id);
-        contactpersonService.deleteByCid(id);
-        contactaddressService.deleteByCid(id);
-        customerService.deleteById(id);
+        Customer customer = new Customer();
+        customer.setIsdelet(1);
+        customer.setGuid(id);
+        customerService.update(customer);
+
+//        contactpersonService.deleteByCid(id);
+//        contactaddressService.deleteByCid(id);
+//        customerService.deleteById(id);
         return "this.contactpersonService.deleteById(id)";
     }
 //    @PostMapping(value = "addCustomer",produces="application/json")

@@ -7,12 +7,14 @@
         <result property="username" column="username" jdbcType="VARCHAR"/>
         <result property="notes" column="notes" jdbcType="VARCHAR"/>
         <result property="role" column="role" jdbcType="INTEGER"/>
+        <result property="adminid" column="adminid" jdbcType="INTEGER"/>
+        <result property="isdelet" column="isdelet" jdbcType="INTEGER"/>
     </resultMap>
 
     <!--查询单个-->
     <select id="queryById" resultMap="CustomerMap">
         select
-          guid, username, notes, role
+          guid, username, notes, role, adminid, isdelet
         from crm.customer
         where guid = #{guid}
     </select>
@@ -20,7 +22,7 @@
     <!--查询指定行数据-->
     <select id="queryAllByLimit" resultMap="CustomerMap">
         select
-          guid, username,notes, role
+          guid, username,notes, role, adminid, isdelet
         from crm.customer
         limit #{offset}, #{limit}
     </select>
@@ -28,14 +30,26 @@
     <!--通过实体作为筛选条件查询-->
     <select id="queryAll" resultMap="CustomerMap">
         select
-        guid, username,notes, role
+        guid, username,notes, role, adminid, isdelet
         from crm.customer
         <where>
-            <if test="guid != null">
+            <if test="guid != null and guid != ''">
                 and guid = #{guid}
             </if>
             <if test="username != null and username != ''">
                 and username = #{username}
+            </if>
+            <if test="notes != null and notes != ''">
+                and notes = #{notes}
+            </if>
+            <if test="role != null and role != ''">
+                and role = #{role}
+            </if>
+            <if test="adminid != null and adminid != ''">
+                and adminid = #{adminid}
+            </if>
+            <if test="isdelet != null">
+                and isdelet = #{isdelet}
             </if>
         </where>
     </select>
@@ -43,21 +57,21 @@
     <!--    查询表内所有信息-->
     <select id="selectAll" resultMap="CustomerMap">
         select
-        guid, username, notes, role
+        guid, username, notes, role, adminid, isdelet
         from crm.customer
     </select>
 
     <select id="fuzzyQueryByName" resultMap="CustomerMap">
         select
-        guid, username, notes, role
+        guid, username, notes, role, adminid, isdelet
         from crm.customer
-        WHERE username LIKE CONCAT(CONCAT('%',#{username},'%'))
+        WHERE (username LIKE CONCAT(CONCAT('%',#{username},'%')))
     </select>
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="guid" useGeneratedKeys="true">
-        insert into crm.customer(username, notes, role)
-        values (#{username}, #{notes}, #{role})
+        insert into crm.customer(username, notes, role, adminid, isdelet)
+        values (#{username}, #{notes}, #{role}, #{adminid}, #{isdelet})
     </insert>
 
     <!--通过主键修改数据-->
@@ -68,10 +82,16 @@
                 username = #{username},
             </if>
             <if test="notes != null and notes != ''">
-                username = #{notes},
+                notes = #{notes},
             </if>
             <if test="role != null and role != ''">
-                username = #{role},
+                role = #{role},
+            </if>
+            <if test="adminid != null and adminid != ''">
+                adminid = #{adminid},
+            </if>
+            <if test="isdelet != null">
+                isdelet = #{isdelet},
             </if>
         </set>
         where guid = #{guid}

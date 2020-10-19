@@ -41,7 +41,7 @@ public interface CustomerDao {
     List<Customer> queryAll(Customer customer);
 
     //模糊查询
-    List<Customer> fuzzyQueryByName(String username);
+    List<Customer> fuzzyQueryByName(String username, Integer role);
 
     List<Customer> selectAll();
 
