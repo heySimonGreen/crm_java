@@ -129,7 +129,7 @@ public class CustomerController {
         String username = data.get("input");
 //        int role = parseInt(data.get("role"));
         Integer role = Integer.valueOf(data.get("role"));
-        if(role == 2) role = null;
+//        if(role == 2) role = null;
         List<Customer> customers = this.customerService.fuzzyQueryByName(username, role);
 
         for(int i = 0;i<customers.size();i++){

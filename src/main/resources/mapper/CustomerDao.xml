@@ -65,7 +65,7 @@
         select
         guid, username, notes, role, adminid, isdelet
         from crm.customer
-        WHERE (username LIKE CONCAT(CONCAT('%',#{username},'%')))
+        WHERE (username LIKE CONCAT(CONCAT('%',#{username},'%'))) and role = #{role} and isdelet = 0
     </select>
 
     <!--新增所有列-->
