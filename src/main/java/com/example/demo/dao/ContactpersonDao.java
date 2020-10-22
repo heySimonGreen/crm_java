@@ -66,11 +66,11 @@ public interface ContactpersonDao {
 
     List<Contactperson> selectAll();
 
-    List<Contactperson> selectByCid(Integer cid);
+    List<Contactperson> selectByCid(String cid);
 
     int insertCustomer(Contactperson contactperson);
 
     //通过cid删除整行信息
-    int deleteByCid(Integer cid);
+    int deleteByCid(String cid);
 
 }

@@ -3,7 +3,7 @@
 <mapper namespace="com.example.demo.dao.CustomerDao">
 
     <resultMap type="com.example.demo.entity.Customer" id="CustomerMap">
-        <result property="guid" column="guid" jdbcType="INTEGER"/>
+        <result property="guid" column="guid" jdbcType="VARCHAR"/>
         <result property="username" column="username" jdbcType="VARCHAR"/>
         <result property="notes" column="notes" jdbcType="VARCHAR"/>
         <result property="role" column="role" jdbcType="INTEGER"/>
@@ -52,6 +52,7 @@
                 and isdelet = #{isdelet}
             </if>
         </where>
+        order by createtime desc
     </select>
 
     <!--    查询表内所有信息-->
@@ -59,6 +60,7 @@
         select
         guid, username, notes, role, adminid, isdelet
         from crm.customer
+        order by createtime desc
     </select>
 
     <select id="fuzzyQueryByName" resultMap="CustomerMap">
@@ -70,8 +72,8 @@
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="guid" useGeneratedKeys="true">
-        insert into crm.customer(username, notes, role, adminid, isdelet)
-        values (#{username}, #{notes}, #{role}, #{adminid}, #{isdelet})
+        insert into crm.customer(guid, username, notes, role, adminid, isdelet)
+        values (#{guid}, #{username}, #{notes}, #{role}, #{adminid}, #{isdelet})
     </insert>
 
     <!--通过主键修改数据-->

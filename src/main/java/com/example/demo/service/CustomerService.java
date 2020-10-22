@@ -18,7 +18,7 @@ public interface CustomerService {
      * @param guid 主键
      * @return 实例对象
      */
-    Customer queryById(Integer guid);
+    Customer queryById(String guid);
 
     /**
      * 查询多条数据
@@ -51,7 +51,7 @@ public interface CustomerService {
      * @param guid 主键
      * @return 是否成功
      */
-    boolean deleteById(Integer guid);
+    boolean deleteById(String guid);
 
     List<Customer> selectAll();
 

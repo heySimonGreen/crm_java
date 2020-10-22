@@ -11,7 +11,7 @@
         <result property="wechat" column="wechat" jdbcType="VARCHAR"/>
         <result property="email" column="email" jdbcType="VARCHAR"/>
         <result property="identity" column="identity" jdbcType="VARCHAR"/>
-        <result property="cid" column="cid" jdbcType="INTEGER"/>
+        <result property="cid" column="cid" jdbcType="VARCHAR"/>
     </resultMap>
 
     <!--查询单个-->
@@ -74,7 +74,7 @@
 
     <insert id="insert2" keyProperty="id" useGeneratedKeys="true">
         insert into crm.contactperson(name, gender, phonenumber, homephonenumber, wechat, email, identity, cid)
-        values (#{name}, #{gender}, #{phonenumber}, #{homephonenumber}, #{wechat}, #{email}, #{identity}, (select MAX(guid) from crm.customer))
+        values (#{name}, #{gender}, #{phonenumber}, #{homephonenumber}, #{wechat}, #{email}, #{identity}, (select guid from customer order by createtime desc limit 1))
     </insert>
 
     <!--通过主键修改数据-->

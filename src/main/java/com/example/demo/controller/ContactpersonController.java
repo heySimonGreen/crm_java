@@ -45,7 +45,7 @@ public class ContactpersonController {
     }
 
     @GetMapping("selectByCid")
-    public List<Contactperson> selectByCid(Integer cid) {
+    public List<Contactperson> selectByCid(String cid) {
         return this.contactpersonService.selectByCid(cid);
     }
 
@@ -60,21 +60,6 @@ public class ContactpersonController {
         contactpersonService.update(contactperson);
         return "updateContactItem";
     }
-
-//    @PostMapping("addContactPerson")
-//    public String addContactPerson(@RequestBody Map<String ,List<Contactperson>> data){
-//        System.out.println(data.get("data"));
-//        List<Contactperson> list = data.get("data");
-//        for(int i=0;i<list.size();i++){
-//            System.out.println(list.get(i).getName());
-////            Contactperson contactperson = new Contactperson();
-////            contactperson.setName(list.get(i).get("name"));
-//
-////            System.out.println("list.get(i).get(name)");
-////            System.out.println(list.get(i).get("name"));
-//        }
-//        return "addContactPerson";
-//    }
 
     @PostMapping("addContactPerson")
     public String addContactPerson(@RequestBody Map<String ,Object> map) throws JsonProcessingException {
@@ -105,7 +90,7 @@ public class ContactpersonController {
             Contactperson contactperson = objectMapper.readValue(jsonInfo,Contactperson.class);
             System.out.println(contactperson);
 //            contactperson.setId(i+53);
-            contactperson.setCid(id);
+            contactperson.setCid(String.valueOf(id));
             contactpersonService.insert(contactperson);
         }
 

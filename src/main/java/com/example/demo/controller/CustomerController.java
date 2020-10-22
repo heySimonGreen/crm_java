@@ -10,6 +10,7 @@ import com.example.demo.service.ContactpersonService;
 import com.example.demo.service.CustomerService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.UUID;
 import org.apache.ibatis.jdbc.Null;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -58,7 +59,7 @@ public class CustomerController {
      * @return 单条数据
      */
     @GetMapping("selectOne")
-    public Customer selectOne(Integer cid) {
+    public Customer selectOne(String cid) {
         return this.customerService.queryById(cid);
     }
 
@@ -168,7 +169,7 @@ public class CustomerController {
     }
 
     @PostMapping (value = "batchDeletAllCustomerByGuid")
-    public String batchDeletAllCustomerByGuid(@RequestBody List<Integer> guid){
+    public String batchDeletAllCustomerByGuid(@RequestBody List<String> guid){
         System.out.println("guid...........");
         System.out.println(guid);
         for(int i=0;i<guid.size();i++){
@@ -202,6 +203,8 @@ public class CustomerController {
         System.out.println("........................");
         //add customer entity to mysql
         Customer customer = new Customer();
+        String UUID = java.util.UUID.randomUUID().toString().replace("-","");
+        customer.setGuid(UUID);
         customer.setUsername(String.valueOf(data.get("username")));
         customer.setNotes(String.valueOf(data.get("notes")));
         customer.setNotes(String.valueOf(data.get("notes")));
@@ -351,7 +354,7 @@ public class CustomerController {
     }
 
     @DeleteMapping("deleteAllById") //通过guid删除客户信息、联系人、联系地址
-    public String deleteAllById(Integer id){
+    public String deleteAllById(String id){
 //        return this.contactpersonService.deleteById(id);
         System.out.println("...............");
         System.out.println(id);

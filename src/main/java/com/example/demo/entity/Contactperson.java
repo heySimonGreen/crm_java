@@ -27,8 +27,7 @@ public class Contactperson implements Serializable {
 
     private String identity;
 
-    private Integer cid;
-
+    private String cid;
 
     public Integer getId() {
         return id;
@@ -94,12 +93,11 @@ public class Contactperson implements Serializable {
         this.identity = identity;
     }
 
-    public Integer getCid() {
+    public String getCid() {
         return cid;
     }
 
-    public void setCid(Integer cid) {
+    public void setCid(String cid) {
         this.cid = cid;
     }
-
 }

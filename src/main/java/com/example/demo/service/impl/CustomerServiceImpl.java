@@ -28,7 +28,7 @@ public class CustomerServiceImpl implements CustomerService {
      * @return 实例对象
      */
     @Override
-    public Customer queryById(Integer guid) {
+    public Customer queryById(String guid) {
         return this.customerDao.queryById(guid);
     }
 
@@ -75,7 +75,7 @@ public class CustomerServiceImpl implements CustomerService {
      * @return 是否成功
      */
     @Override
-    public boolean deleteById(Integer guid) {
+    public boolean deleteById(String guid) {
         return this.customerDao.deleteById(guid) > 0;
     }
 

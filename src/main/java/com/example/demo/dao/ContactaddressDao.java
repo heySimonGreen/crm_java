@@ -69,9 +69,9 @@ public interface ContactaddressDao {
 
 //    int insertCustomer(Contactaddress contactaddress);
 
-    List<Contactaddress> selectByCid(Integer cid);
+    List<Contactaddress> selectByCid(String cid);
 
     //通过cid删除整行信息
-    int deleteByCid(Integer cid);
+    int deleteByCid(String cid);
 
 }

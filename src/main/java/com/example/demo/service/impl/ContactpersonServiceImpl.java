@@ -85,7 +85,7 @@ public class ContactpersonServiceImpl implements ContactpersonService {
     }
 
     @Override
-    public boolean deleteByCid(Integer cid) {
+    public boolean deleteByCid(String cid) {
         return this.contactpersonDao.deleteByCid(cid) > 0;
     }
 
@@ -95,7 +95,7 @@ public class ContactpersonServiceImpl implements ContactpersonService {
     }
 
     @Override
-    public List<Contactperson> selectByCid(Integer cid) {
+    public List<Contactperson> selectByCid(String cid) {
         return contactpersonDao.selectByCid(cid);
     }
 

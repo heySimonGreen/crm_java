@@ -54,11 +54,11 @@ public interface ContactpersonService {
      */
     boolean deleteById(Integer id);
 
-    boolean deleteByCid(Integer cid);
+    boolean deleteByCid(String cid);
 
     List<Contactperson> selectAll();
 
-    List<Contactperson> selectByCid(Integer cid);
+    List<Contactperson> selectByCid(String cid);
 
     Contactperson insertCustomer(Contactperson contactperson);
 

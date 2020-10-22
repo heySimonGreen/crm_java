@@ -45,7 +45,7 @@ public class ContactaddressController {
     }
 
     @GetMapping("selectByCid")
-    public List<Contactaddress> selectByCid(@RequestParam Integer cid){
+    public List<Contactaddress> selectByCid(@RequestParam String cid){
         return this.contactaddressService.selectByCid(cid);
     }
 
@@ -77,7 +77,7 @@ public class ContactaddressController {
             String jsonInfo = objectMapper.writeValueAsString(objectList.get(i));
             Contactaddress contactaddress = objectMapper.readValue(jsonInfo,Contactaddress.class);
             System.out.println(contactaddress);
-            contactaddress.setCid(id);
+            contactaddress.setCid(String.valueOf(id));
             contactaddressService.insert(contactaddress);
         }
 
@@ -85,29 +85,10 @@ public class ContactaddressController {
     }
     @PostMapping("updateAddressItem")
     public String updateAddressItem(@RequestBody Contactaddress contactaddress){
-//        System.out.println(contactperson.getEmail());
         contactaddressService.update(contactaddress);
         System.out.println(contactaddress);
         System.out.println(contactaddress.getDetaileara());
         System.out.println(contactaddress.getDistrict());
         return "updateAddressItem";
     }
-
-
-//    @GetMapping("insertContactaddress")
-//    public String insertContactaddress(@RequestParam("contactaddressTitle") String contactaddressTitle, @RequestParam("contactaddressStampnumber") Integer contactaddressStampnumber,
-//                                       @RequestParam("contactaddressCountry") String contactaddressCountry, @RequestParam("contactaddressProvince") String contactaddressProvince,
-//                                       @RequestParam("contactaddressCity") String contactaddressCity, @RequestParam("contactaddressDistrict") String contactaddressDistrict){
-//        Contactaddress contactaddress = new Contactaddress();
-//        contactaddress.setTitle(contactaddressTitle);
-//        contactaddress.setStampnumber(contactaddressStampnumber);
-//        contactaddress.setCountry(contactaddressCountry);
-//        contactaddress.setProvince(contactaddressProvince);
-//        contactaddress.setCity(contactaddressCity);
-//        contactaddress.setDistrict(contactaddressDistrict);
-//        contactaddressService.insertCustomer(contactaddress);
-//
-//        return "hello";
-//    }
-
 }

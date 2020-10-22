@@ -20,7 +20,7 @@ public interface CustomerDao {
      * @param guid 主键
      * @return 实例对象
      */
-    Customer queryById(Integer guid);
+    Customer queryById(String guid);
 
     /**
      * 查询指定行数据
@@ -67,7 +67,7 @@ public interface CustomerDao {
      * @param guid 主键
      * @return 影响行数
      */
-    int deleteById(Integer guid);
+    int deleteById(String guid);
 
 
 }

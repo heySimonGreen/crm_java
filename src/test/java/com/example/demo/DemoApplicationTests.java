@@ -50,7 +50,7 @@ class DemoApplicationTests {
     @Test
     void test2(){
         System.out.println("删除数据");
-        customerService.deleteById(7);
+//        customerService.deleteById(7);
     }
     //修改数据
 //    @Test
@@ -65,9 +65,9 @@ class DemoApplicationTests {
     @Test
     void test4(){
         System.out.println("查询数据");
-        Customer customer = customerService.queryById(3);
-        System.out.println(customer.getGuid());
-        System.out.println(customer.getUsername());
+//        Customer customer = customerService.queryById(3);
+//        System.out.println(customer.getGuid());
+//        System.out.println(customer.getUsername());
     }
 
     @Test
@@ -125,7 +125,7 @@ class DemoApplicationTests {
         customer.setUsername("bbbbbb");
         customer.setRole(1);
         customerDao.insert(customer);
-        System.out.println(contactaddressDao.selectByCid(84));
+//        System.out.println(contactaddressDao.selectByCid(84));
     }    @Test
     void test12(){
         System.out.println("updateAddressItem");
@@ -135,6 +135,15 @@ class DemoApplicationTests {
         contactaddress.setProvince("中国");
         contactaddress.setDetaileara("detaileara");
         contactaddressDao.update(contactaddress);
+    }
+    @Test
+    void test13(){
+        System.out.println("TEST");
+        List<Customer> list = new ArrayList<>();
+        list = customerService.selectAll();
+        for(int i=0;i<list.size();i++){
+            System.out.println(list.get(i).getGuid() + " " + list.get(i).getNotes());
+        }
     }
 
 }

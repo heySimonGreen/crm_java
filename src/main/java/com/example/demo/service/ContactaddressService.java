@@ -54,12 +54,12 @@ public interface ContactaddressService {
      */
     boolean deleteById(Integer id);
     //通过cid删除整行信息
-    boolean deleteByCid(Integer cid);
+    boolean deleteByCid(String cid);
 
     List<Contactaddress> selectAll();
 
 //    Contactaddress insertCustomer(Contactaddress contactaddress);
 
-    List<Contactaddress> selectByCid(Integer Cid);
+    List<Contactaddress> selectByCid(String Cid);
 
 }

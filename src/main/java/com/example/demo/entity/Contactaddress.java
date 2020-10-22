@@ -13,7 +13,7 @@ public class Contactaddress implements Serializable {
 
     private Integer id;
 
-    private Integer cid;
+    private String cid;
 
     private String title;
 
@@ -29,7 +29,6 @@ public class Contactaddress implements Serializable {
 
     private String detaileara;
 
-
     public Integer getId() {
         return id;
     }
@@ -38,11 +37,11 @@ public class Contactaddress implements Serializable {
         this.id = id;
     }
 
-    public Integer getCid() {
+    public String getCid() {
         return cid;
     }
 
-    public void setCid(Integer cid) {
+    public void setCid(String cid) {
         this.cid = cid;
     }
 

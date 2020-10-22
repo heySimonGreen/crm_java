@@ -4,7 +4,7 @@
 
     <resultMap type="com.example.demo.entity.Contactaddress" id="ContactaddressMap">
         <result property="id" column="id" jdbcType="INTEGER"/>
-        <result property="cid" column="cid" jdbcType="INTEGER"/>
+        <result property="cid" column="cid" jdbcType="VARCHAR"/>
         <result property="title" column="title" jdbcType="VARCHAR"/>
         <result property="stampnumber" column="stampnumber" jdbcType="INTEGER"/>
         <result property="country" column="country" jdbcType="VARCHAR"/>
@@ -74,7 +74,7 @@
     </insert>
     <insert id="insert2" keyProperty="id" useGeneratedKeys="true">
         insert into crm.contactaddress(cid, title, stampnumber, country, province, city, district, detaileara)
-        values ((select MAX(guid) from crm.customer), #{title}, #{stampnumber}, #{country}, #{province}, #{city}, #{district}, #{detaileara})
+        values ((select guid from customer order by createtime desc limit 1), #{title}, #{stampnumber}, #{country}, #{province}, #{city}, #{district}, #{detaileara})
     </insert>
 
     <!--通过主键修改数据-->
