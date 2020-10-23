@@ -66,8 +66,8 @@ public class ContactaddressController {
 //        }else {
 //            System.out.println("no");
 //        }
-        Map<String,Integer> map1 = (Map<String, Integer>) map.get("cid");
-        int id = map1.get("cid");
+        Map<String,String> map1 = (Map<String, String>) map.get("cid");
+        String id = map1.get("cid");
         System.out.println(map1.get("cid"));
         System.out.println("map1.get(cid)");
         List<Object> objectList = (List<Object>) map.get("data");
@@ -77,7 +77,7 @@ public class ContactaddressController {
             String jsonInfo = objectMapper.writeValueAsString(objectList.get(i));
             Contactaddress contactaddress = objectMapper.readValue(jsonInfo,Contactaddress.class);
             System.out.println(contactaddress);
-            contactaddress.setCid(String.valueOf(id));
+            contactaddress.setCid(id);
             contactaddressService.insert(contactaddress);
         }
 

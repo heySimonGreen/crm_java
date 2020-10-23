@@ -67,8 +67,8 @@ public class ContactpersonController {
         System.out.println(map.get("cid"));
 //        Map<String,String> map1 = (Map<String, String>) map.get("cid");
 //        int id = Integer.valueOf(map1.get("cid"));
-        Map<String,Integer> map1 = (Map<String, Integer>) map.get("cid");
-        int id = map1.get("cid");
+        Map<String,String> map1 = (Map<String, String>) map.get("cid");
+        String id = map1.get("cid");
         System.out.println(map1.get("cid"));
         System.out.println("map1.get(cid)");
 
@@ -90,7 +90,7 @@ public class ContactpersonController {
             Contactperson contactperson = objectMapper.readValue(jsonInfo,Contactperson.class);
             System.out.println(contactperson);
 //            contactperson.setId(i+53);
-            contactperson.setCid(String.valueOf(id));
+            contactperson.setCid(id);
             contactpersonService.insert(contactperson);
         }
 

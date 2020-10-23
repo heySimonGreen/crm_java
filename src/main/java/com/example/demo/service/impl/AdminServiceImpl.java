@@ -85,5 +85,12 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public List<Admin> queryAllAdmin(){
         return this.adminDao.queryAllAdmin();
-    };
+    }
+
+    @Override
+    public List<Admin> queryAll(Admin admin) {
+        return this.adminDao.queryAll(admin);
+    }
+
+    ;
 }

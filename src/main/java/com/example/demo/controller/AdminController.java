@@ -81,4 +81,34 @@ public class AdminController {
         return "loginpost";
     }
 
+    //测试，post还是不行
+    @PostMapping("rigister")
+    public String rigister(@RequestBody Map<String,String> data){
+        System.out.println("loginpost..........");
+        String username = data.get("username");
+        String password = data.get("password");
+        String phonenumber = data.get("phonenumber");
+        System.out.println(data.get("username"));
+        System.out.println(data.get("password"));
+        System.out.println(data.get("phonenumber"));
+
+        Admin admin1 = new Admin();
+        Admin admin2 = new Admin();
+        admin1.setUsername(username);
+        admin2.setPhonenumber(phonenumber);
+        List<Admin> adminList = adminService.queryAll(admin1);
+        List<Admin> adminList2 = adminService.queryAll(admin2);
+        if(adminList.size() == 0 && adminList2.size() == 0){
+            Admin admin = new Admin();
+            admin.setUsername(username);
+            admin.setPasswd(password);
+            admin.setPhonenumber(phonenumber);
+            admin.setType(0);
+            adminService.insert(admin);
+            return "rigister successful";
+        }else {
+            return "username or phonenumber is exist";
+        }
+    }
+
 }

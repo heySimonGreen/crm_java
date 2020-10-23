@@ -57,4 +57,6 @@ public interface AdminService {
 
     List<Admin> queryAllAdmin();
 
+    List<Admin> queryAll(Admin admin);
+
 }

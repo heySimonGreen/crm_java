@@ -14,8 +14,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.springframework.util.DigestUtils;
 
 @SpringBootTest
 class DemoApplicationTests {
@@ -144,6 +148,16 @@ class DemoApplicationTests {
         for(int i=0;i<list.size();i++){
             System.out.println(list.get(i).getGuid() + " " + list.get(i).getNotes());
         }
+    }
+    @Test
+    void test14() throws NoSuchAlgorithmException {
+        System.out.println("md5");
+        String password = "123456";
+        MessageDigest md = MessageDigest.getInstance("MD5");
+        String resultString = DigestUtils.md5DigestAsHex(password.getBytes());
+        System.out.println("resultString:");
+        System.out.println(resultString);
+
     }
 
 }
