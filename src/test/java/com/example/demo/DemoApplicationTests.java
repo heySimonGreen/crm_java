@@ -23,20 +23,20 @@ import org.springframework.util.DigestUtils;
 
 @SpringBootTest
 class DemoApplicationTests {
-    @Autowired
-    private CustomerService customerService;
-    @Autowired
-    private CustomerDao customerDao;
-
-    @Autowired
-    private ContactpersonService contactpersonService;
-    @Autowired
-    private ContactpersonDao contactpersonDao;
-
-    @Autowired
-    private ContactaddressService contactaddressService;
-    @Autowired
-    private ContactaddressDao contactaddressDao;
+//    @Autowired
+//    private CustomerService customerService;
+//    @Autowired
+//    private CustomerDao customerDao;
+//
+//    @Autowired
+//    private ContactpersonService contactpersonService;
+//    @Autowired
+//    private ContactpersonDao contactpersonDao;
+//
+//    @Autowired
+//    private ContactaddressService contactaddressService;
+//    @Autowired
+//    private ContactaddressDao contactaddressDao;
 
     @Test
     void contextLoads() {
@@ -66,98 +66,98 @@ class DemoApplicationTests {
 //        customerService.update(customer);
 //    }
     //查询数据
-    @Test
-    void test4(){
-        System.out.println("查询数据");
-//        Customer customer = customerService.queryById(3);
-//        System.out.println(customer.getGuid());
-//        System.out.println(customer.getUsername());
-    }
-
-    @Test
-    void test5(){
-        System.out.println("查询selectALL数据");
-        List<Customer> a = new ArrayList<>();
-        a = customerDao.selectAll();
-        System.out.println(a.get(0).getUsername());
-    }
-    @Test
-    void test6(){
-        System.out.println("查询contactperson selectALL数据");
-        List<Contactperson> a = new ArrayList<>();
-        a = contactpersonDao.selectAll();
-        System.out.println(a.get(0).getName());
-    }
-    @Test
-    void test8(){
-        System.out.println("添加客户时，添加联系人");
-        Contactperson contactperson = new Contactperson();
-        contactperson.setEmail("test");
-        contactperson.setGender("test");
-        contactperson.setHomephonenumber("444");
-        contactperson.setIdentity("test");
-        contactperson.setPhonenumber("5");
-        contactperson.setName("test");
-        contactperson.setWechat("test");
-        contactpersonDao.insertCustomer(contactperson);
-    }
-    @Resource
-    private CustomerService customerService2;
-    @Test
-    void test9(){
-        System.out.println("查询所有客户，并带");
-        List<Customer> list = this.customerService2.selectAll();
-        for (int i = 0; i < list.size(); i++) {
-            System.out.println(list.get(i));
-        }
-    }
-
 //    @Test
-//    void test10(){
-//        System.out.println("模糊查询");
-//        List<Customer> list = this.customerService.fuzzyQueryByName("a");
+//    void test4(){
+//        System.out.println("查询数据");
+////        Customer customer = customerService.queryById(3);
+////        System.out.println(customer.getGuid());
+////        System.out.println(customer.getUsername());
+//    }
+//
+//    @Test
+//    void test5(){
+//        System.out.println("查询selectALL数据");
+//        List<Customer> a = new ArrayList<>();
+//        a = customerDao.selectAll();
+//        System.out.println(a.get(0).getUsername());
+//    }
+//    @Test
+//    void test6(){
+//        System.out.println("查询contactperson selectALL数据");
+//        List<Contactperson> a = new ArrayList<>();
+//        a = contactpersonDao.selectAll();
+//        System.out.println(a.get(0).getName());
+//    }
+//    @Test
+//    void test8(){
+//        System.out.println("添加客户时，添加联系人");
+//        Contactperson contactperson = new Contactperson();
+//        contactperson.setEmail("test");
+//        contactperson.setGender("test");
+//        contactperson.setHomephonenumber("444");
+//        contactperson.setIdentity("test");
+//        contactperson.setPhonenumber("5");
+//        contactperson.setName("test");
+//        contactperson.setWechat("test");
+//        contactpersonDao.insertCustomer(contactperson);
+//    }
+//    @Resource
+//    private CustomerService customerService2;
+//    @Test
+//    void test9(){
+//        System.out.println("查询所有客户，并带");
+//        List<Customer> list = this.customerService2.selectAll();
 //        for (int i = 0; i < list.size(); i++) {
-//            System.out.println("list.get(i).getUsername() + \" \" + list.get(i).getNotes() + \" \" + list.get(i).getGuid()");
-//            System.out.println(list.get(i).getUsername() + " " + list.get(i).getNotes() + " " + list.get(i).getGuid());
+//            System.out.println(list.get(i));
 //        }
 //    }
-    @Test
-    void test11(){
-        System.out.println("insert");
-        Customer customer = new Customer();
-        customer.setNotes("bbbbbb");
-        customer.setUsername("bbbbbb");
-        customer.setRole(1);
-        customerDao.insert(customer);
-//        System.out.println(contactaddressDao.selectByCid(84));
-    }    @Test
-    void test12(){
-        System.out.println("updateAddressItem");
-        Contactaddress contactaddress = new Contactaddress();
-        contactaddress.setCountry("中国");
-        contactaddress.setId(131);
-        contactaddress.setProvince("中国");
-        contactaddress.setDetaileara("detaileara");
-        contactaddressDao.update(contactaddress);
-    }
-    @Test
-    void test13(){
-        System.out.println("TEST");
-        List<Customer> list = new ArrayList<>();
-        list = customerService.selectAll();
-        for(int i=0;i<list.size();i++){
-            System.out.println(list.get(i).getGuid() + " " + list.get(i).getNotes());
-        }
-    }
-    @Test
-    void test14() throws NoSuchAlgorithmException {
-        System.out.println("md5");
-        String password = "123456";
-        MessageDigest md = MessageDigest.getInstance("MD5");
-        String resultString = DigestUtils.md5DigestAsHex(password.getBytes());
-        System.out.println("resultString:");
-        System.out.println(resultString);
-
-    }
+//
+////    @Test
+////    void test10(){
+////        System.out.println("模糊查询");
+////        List<Customer> list = this.customerService.fuzzyQueryByName("a");
+////        for (int i = 0; i < list.size(); i++) {
+////            System.out.println("list.get(i).getUsername() + \" \" + list.get(i).getNotes() + \" \" + list.get(i).getGuid()");
+////            System.out.println(list.get(i).getUsername() + " " + list.get(i).getNotes() + " " + list.get(i).getGuid());
+////        }
+////    }
+//    @Test
+//    void test11(){
+//        System.out.println("insert");
+//        Customer customer = new Customer();
+//        customer.setNotes("bbbbbb");
+//        customer.setUsername("bbbbbb");
+//        customer.setRole(1);
+//        customerDao.insert(customer);
+////        System.out.println(contactaddressDao.selectByCid(84));
+//    }    @Test
+//    void test12(){
+//        System.out.println("updateAddressItem");
+//        Contactaddress contactaddress = new Contactaddress();
+//        contactaddress.setCountry("中国");
+//        contactaddress.setId(131);
+//        contactaddress.setProvince("中国");
+//        contactaddress.setDetaileara("detaileara");
+//        contactaddressDao.update(contactaddress);
+//    }
+//    @Test
+//    void test13(){
+//        System.out.println("TEST");
+//        List<Customer> list = new ArrayList<>();
+//        list = customerService.selectAll();
+//        for(int i=0;i<list.size();i++){
+//            System.out.println(list.get(i).getGuid() + " " + list.get(i).getNotes());
+//        }
+//    }
+//    @Test
+//    void test14() throws NoSuchAlgorithmException {
+//        System.out.println("md5");
+//        String password = "123456";
+//        MessageDigest md = MessageDigest.getInstance("MD5");
+//        String resultString = DigestUtils.md5DigestAsHex(password.getBytes());
+//        System.out.println("resultString:");
+//        System.out.println(resultString);
+//
+//    }
 
 }

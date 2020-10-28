@@ -4,8 +4,15 @@ server:
 spring:
   datasource:
     username: root
-    password: chenwei1234
+    password: 'chenwei1234'
     url: jdbc:mysql://127.0.0.1:3306/crm?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=UTC
     driver-class-name: com.mysql.jdbc.Driver
+    resources:
+      static-locations: classpath:/static/, classpath:/templates/
 mybatis:
   mapper-locations: classpath:mapper/*.xml
+
+thymeleaf:
+  prefix:
+    classpath: /templates   # 访问template下的html文件需要配置模板，映射
+    cache: false              # 开发时关闭缓存,不然没法看到实时页面
