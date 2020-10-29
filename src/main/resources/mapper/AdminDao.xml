@@ -8,6 +8,7 @@
         <result property="passwd" column="passwd" jdbcType="VARCHAR"/>
         <result property="phonenumber" column="phonenumber" jdbcType="VARCHAR"/>
         <result property="type" column="type" jdbcType="INTEGER"/>
+        <result property="uuid" column="uuid" jdbcType="VARCHAR"/>
     </resultMap>
 
     <!--查询单个-->
@@ -35,7 +36,7 @@
     <!--通过实体作为筛选条件查询-->
     <select id="queryAll" resultMap="AdminMap">
         select
-        id, username, passwd, phonenumber, type
+        id, username, passwd, phonenumber, type, uuid
         from crm.admin
         <where>
             <if test="id != null">
@@ -53,13 +54,16 @@
             <if test="type != null">
                 and type = #{type}
             </if>
+            <if test="uuid != null">
+                and uuid = #{uuid}
+            </if>
         </where>
     </select>
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
-        insert into crm.admin(username, passwd, phonenumber, type)
-        values (#{username}, #{passwd}, #{phonenumber}, #{type})
+        insert into crm.admin(username, passwd, phonenumber, type, uuid)
+        values (#{username}, #{passwd}, #{phonenumber}, #{type}, #{uuid})
     </insert>
 
     <!--通过主键修改数据-->

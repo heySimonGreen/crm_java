@@ -69,6 +69,7 @@ public class AdminController {
         map.put("correctUsernameAndPasswd",correctUsernameAndPasswd);
         if(adminService.loginSelectByEntity(admin).size() != 0){
             map.put("adminid",adminList.get(0).getId());
+            map.put("uuid",adminList.get(0).getUuid());
         }
         return map;
     }
@@ -82,8 +83,13 @@ public class AdminController {
     }
 
     //测试，post还是不行
+//    public String rigister(@RequestBody Map<String,String> data){
     @PostMapping("rigister")
-    public String rigister(@RequestBody Map<String,String> data){
+    public String rigister(@RequestParam Map<String,String> data){
+////    public String rigister(@RequestBody String password){
+//        System.out.println(data.toString());
+//        return "ssss";
+
         System.out.println("loginpost..........");
         String username = data.get("username");
         String password = data.get("password");
@@ -99,7 +105,9 @@ public class AdminController {
         List<Admin> adminList = adminService.queryAll(admin1);
         List<Admin> adminList2 = adminService.queryAll(admin2);
         if(adminList.size() == 0 && adminList2.size() == 0){
+            String UUID = java.util.UUID.randomUUID().toString().replace("-","");
             Admin admin = new Admin();
+            admin.setUuid(UUID);
             admin.setUsername(username);
             admin.setPasswd(password);
             admin.setPhonenumber(phonenumber);

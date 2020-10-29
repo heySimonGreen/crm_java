@@ -18,6 +18,8 @@ public class Admin implements Serializable {
     private String passwd;
 
     private String phonenumber;
+
+    private String uuid;
     /**
      * 1代表超级管理员。0代表普通管理yuan
      */
@@ -64,4 +66,11 @@ public class Admin implements Serializable {
         this.type = type;
     }
 
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
 }
