@@ -2,12 +2,16 @@ package com.example.demo.controller;
 
 import com.example.demo.entity.Contactperson;
 import com.example.demo.service.ContactpersonService;
+import com.example.demo.util.MyInterceptor;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sun.codemodel.internal.JMethod;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
 
@@ -27,6 +31,8 @@ public class ContactpersonController {
      */
     @Resource
     private ContactpersonService contactpersonService;
+
+    private static final Logger logger = LoggerFactory.getLogger(MyInterceptor.class);
 
     /**
      * 通过主键查询单条数据
@@ -60,6 +66,13 @@ public class ContactpersonController {
         contactpersonService.update(contactperson);
         return "updateContactItem";
     }
+
+//    @RequestMapping(value = "updateContactItem", method = RequestMethod.POST, produces="application/json")
+//    public String updateContactItem(@RequestBody Map<String ,Object> data){
+//        logger.info(String.valueOf(data.size()));
+//        logger.info(data.toString());
+//        return "updateContactItem";
+//    }
 
     @PostMapping("addContactPerson")
     public String addContactPerson(@RequestBody Map<String ,Object> map) throws JsonProcessingException {

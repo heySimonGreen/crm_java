@@ -23,16 +23,20 @@ public class mvcCofig implements WebMvcConfigurer {
                 //配置不拦截的路径
                 .excludePathPatterns(
 //                        "/customer/selectAllTest",
-                        "/customer/deleteAllById",
+//                        "/customer/deleteAllById",
 //                        "/contactperson/selectByCid",
 //                        "/contactaddress/selectByCid",
-                        "/customer/addCustomer3",
-                        "/contactperson/addContactPerson",
-                        "/contactperson/deleteById",
-                        "/contactaddress/updateAddressItem",
-                        "/contactperson/updateContactItem",
-                        "/contactaddress/addContactAddress",
-                        "/contactaddress/deleteById",
+//                        "/customer/addCustomer3",
+//                        "/customer/searchInputButton",
+//                        "/favicon.ico",
+//                        "/customer/batchDeletAllCustomerByGuid",
+//                        "/index.html",
+//                        "/contactperson/deleteById",
+//                        "/contactaddress/deleteById",
+//                        "/contactaddress/updateAddressItem",
+//                        "/contactperson/updateContactItem",
+//                        "/contactaddress/addContactAddress",
+//                        "/contactperson/addContactPerson",
                         "/admin/login","/","/login","/css/**","/js/**","/fonts/**","images/**");
 //        super.addInterceptors(registry);
 

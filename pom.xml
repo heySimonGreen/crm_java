@@ -44,6 +44,16 @@
             <artifactId>druid</artifactId>
             <version>1.0.20</version>
         </dependency>
+        <dependency>
+            <groupId>org.apache.logging.Log4j</groupId>
+            <artifactId>Log4j-core</artifactId>
+            <version>2.12.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.Log4j</groupId>
+            <artifactId>Log4j-api</artifactId>
+            <version>2.12.1</version>
+        </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>

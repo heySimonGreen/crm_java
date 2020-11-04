@@ -231,7 +231,7 @@ public class CustomerController {
             Contactperson contactperson = objectMapper.readValue(jsonInfoAddress,Contactperson.class);
             contactpersonService.insert2(contactperson);
         }
-        return "chenwei";
+        return "add customer successful!";
     }
 
     @GetMapping(value = "addCustomer", produces="application/json")
@@ -366,7 +366,7 @@ public class CustomerController {
 //        contactpersonService.deleteByCid(id);
 //        contactaddressService.deleteByCid(id);
 //        customerService.deleteById(id);
-        return "this.contactpersonService.deleteById(id)";
+        return "deleteAllById successful";
     }
 //    @PostMapping(value = "addCustomer",produces="application/json")
 //    public String addCustomer(@RequestBody Customer customer){

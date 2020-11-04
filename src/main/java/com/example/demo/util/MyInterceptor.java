@@ -2,6 +2,7 @@ package com.example.demo.util;
 
 import com.example.demo.entity.Admin;
 import com.example.demo.service.AdminService;
+import org.apache.logging.log4j.LogManager;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.DigestUtils;
 import org.springframework.web.servlet.HandlerInterceptor;
 
+import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -23,9 +25,8 @@ import java.util.*;
  */
 @Component
 public class MyInterceptor implements HandlerInterceptor {
-    @Autowired
+    @Resource
     AdminService adminService;
-
 
     private static final Logger logger = LoggerFactory.getLogger(MyInterceptor.class);
     public boolean signature(String time, String version, String guid, String param, String signature){
@@ -40,9 +41,15 @@ public class MyInterceptor implements HandlerInterceptor {
 
         response.setContentType("application/json;charset=utf-8");
         logger.info("time:" + request.getHeader("time"));
-        logger.info("guid:" + request.getHeader("guid"));
+//        logger.info("guid:" + request.getHeader("guid"));
         logger.info("param:" + request.getHeader("param"));
         logger.info("signature:" + request.getHeader("signature"));
+        logger.error("signature:" + request.getHeader("signature"));
+
+//        logger2.trace("logger2.trace:" + request.getHeader("signature"));
+//        logger2.debug("logger2.debug:" + request.getHeader("signature"));
+//        logger2.info("logger2.info:" + request.getHeader("signature"));
+//        logger2.error("logger2.error:" + request.getHeader("signature"));
         String signature = request.getHeader("signature");
 
         logger.info("request.getRequestURI(): " + request.getRequestURI());
@@ -107,20 +114,9 @@ public class MyInterceptor implements HandlerInterceptor {
         String result = time + path + guid + param + javaCryptToken;
         logger.info("result:" + result);
         String javaSignature = DigestUtils.md5DigestAsHex(result.getBytes());
-        logger.info(javaSignature);
+        logger.info("javaSignature: "+javaSignature);
 
-//        JSONStringer jsonStringer = new JSONStringer();
-//        jsonStringer.value(request.getParameterMap());
-//        logger.info("jsonStringer.toString(): " + jsonStringer.toString());
-//        String time = request.getHeader("time");
-//        String version = request.getHeader("version");
-//        String path = request.getRequestURI();
-//        String guid = request.getHeader("guid");
-//        String uuid = "0cc175b9c0f1b6a831c399e269772661";
-//        String param = request.getHeader("param");
-//        String signature = request.getHeader("signature");
-
-
+        //请求的五要素不能为空
         if(time == null || path == null || path == null  || guid == null || param == null || javaSignature == null){
             response.setCharacterEncoding("UTF-8");
             response.setContentType("application/json; charset=utf-8");
@@ -152,7 +148,7 @@ public class MyInterceptor implements HandlerInterceptor {
         if(serverTimeInt<clientTimeInt){
             serverTimeInt+=60;
         }
-
+        //判断请求时间是否超时，时间在两秒内是正常的
         String clientTimeCutLastTwoChar = time.substring(0,time.length()-4);
         String serverTimeCutLastTwoChar = serverTime.substring(0,serverTime.length()-4);
         logger.info("clientTimeCutLastTwoChar: "+clientTimeCutLastTwoChar);
@@ -193,13 +189,25 @@ public class MyInterceptor implements HandlerInterceptor {
         for(int i=0;i<adminList.size();i++){
             logger.info(adminList.get(i).getUuid());
         }
-
+        //判断uuid是否存在
         if(adminList.size() == 0){
             PrintWriter writer = null;
             writer = response.getWriter();
             JSONObject json = new JSONObject();
             json.put("code", "554");
             json.put("message", "管理员不存在");
+            writer.print(json);
+            writer.close();
+            return false;
+        }
+
+        if(!javaSignature.equals(signature)){
+            logger.error("!javaSignature.equals(signature)");
+            PrintWriter writer = null;
+            writer = response.getWriter();
+            JSONObject json = new JSONObject();
+            json.put("code", "555");
+            json.put("message", "签证验证失败!javaSignature.equals(signature)");
             writer.print(json);
             writer.close();
             return false;
